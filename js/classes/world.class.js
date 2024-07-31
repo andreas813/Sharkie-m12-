@@ -11,8 +11,8 @@ class World {
     backgrounds = [
         new Background('img/3_background/layers/5_water/d1.png', 0),
         new Background('img/3_background/layers/4_fondo_2/d1.png', 0),
-        new Background('img/3_background/layers/3_fondo_1/d1.png', 0), 
-        new Background('img/3_background/layers/2_floor/d1.png', 0), 
+        new Background('img/3_background/layers/3_fondo_1/d1.png', 0),
+        new Background('img/3_background/layers/2_floor/d1.png', 0),
     ];
     ctx;
     constructor(canvas) {
