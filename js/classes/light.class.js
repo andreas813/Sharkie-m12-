@@ -14,7 +14,6 @@ class Light extends MovableObject {
                 this.posX -= 0.2;
             }
             else { this.posX = 250 }
-        },
-            1000 / 60)
+        }, 1000 / 60)
     }
 }
