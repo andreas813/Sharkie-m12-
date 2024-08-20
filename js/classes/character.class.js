@@ -24,23 +24,41 @@ class Character extends MovableObject {
         'img/1_sharkie/3_swim/3.png',
         'img/1_sharkie/3_swim/5.png',
         'img/1_sharkie/3_swim/6.png',
-    ]
+    ];
+    world;
+    speed = 3;
+
     constructor() {
         super().loadImage('img/1_sharkie/3_swim/1.png');
         this.loadImages(this.imagesSwim);
         this.animate();
     }
 
+
     animate() {
         setInterval(() => {
-            if (this.currentImage >= this.imagesSwim.length) {
-                this.currentImage = 0;
+            if (this.world.keyboard.rightKey && this.posX < this.world.level.levelEndX) {
+                this.posX += this.speed;
+                this.otherDirection = false;
             }
-            let path = this.imagesSwim[this.currentImage];
-            this.img = this.imageCache[path];
-            this.currentImage++;
+            if (this.world.keyboard.leftKey && this.posX > 0) {
+                this.posX -= this.speed;
+                this.otherDirection = true;
+            }
+            this.world.cameraX = -this.posX + 25;
+        }, 1000 / 60);
+        setInterval(() => {
+            if (this.world.keyboard.rightKey || this.world.keyboard.leftKey) {
+                if (this.currentImage >= this.imagesSwim.length) {
+                    this.currentImage = 0;
+                }
+                let path = this.imagesSwim[this.currentImage];
+                this.img = this.imageCache[path];
+                this.currentImage++;
+            }
         }, 1000 / 8);
     }
+
 
     jump() {
 
