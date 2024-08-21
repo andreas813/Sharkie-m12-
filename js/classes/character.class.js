@@ -27,40 +27,42 @@ class Character extends MovableObject {
     ];
     world;
     speed = 3;
+    swimmingSound = new Audio('audio/swimming.mp3');
+    posY = 0;
 
     constructor() {
         super().loadImage('img/1_sharkie/3_swim/1.png');
         this.loadImages(this.imagesSwim);
+        this.applyGravity();
         this.animate();
     }
 
 
     animate() {
         setInterval(() => {
+            this.swimmingSound.volume = 0.05;
             if (this.world.keyboard.rightKey && this.posX < this.world.level.levelEndX) {
-                this.posX += this.speed;
+                this.moveRight();
                 this.otherDirection = false;
+                this.swimmingSound.play();
             }
             if (this.world.keyboard.leftKey && this.posX > 0) {
-                this.posX -= this.speed;
+                this.moveLeft();
                 this.otherDirection = true;
+                this.swimmingSound.play();
+            }
+            if (this.world.keyboard.upKey && !this.isAboveGround()) {
+                this.jump();
+                this.swimmingSound.play();
             }
             this.world.cameraX = -this.posX + 25;
         }, 1000 / 60);
         setInterval(() => {
-            if (this.world.keyboard.rightKey || this.world.keyboard.leftKey) {
-                if (this.currentImage >= this.imagesSwim.length) {
-                    this.currentImage = 0;
-                }
-                let path = this.imagesSwim[this.currentImage];
-                this.img = this.imageCache[path];
-                this.currentImage++;
+            if (this.world.keyboard.rightKey || this.world.keyboard.leftKey || this.isAboveGround()) {
+                this.playAnimation(this.imagesSwim);
             }
         }, 1000 / 8);
     }
 
 
-    jump() {
-
-    }
 }

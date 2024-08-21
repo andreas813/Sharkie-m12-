@@ -18,13 +18,11 @@ class Pufferfish extends MovableObject {
     }
     animate() {
         setInterval(() => {
-            if (this.currentImage >= this.imagesSwim.length) {
-                this.currentImage = 0;
-            }
-            let path = this.imagesSwim[this.currentImage];
-            this.img = this.imageCache[path];
-            this.currentImage++;
+            this.playAnimation(this.imagesSwim);
         }, 1000 / 6);
-        this.moveLeft();
+        setInterval(() => {
+            if (this.posX <= -350) { this.posX = 250 }
+            this.moveLeft();
+        }, 1000 / 60);
     }
 }

@@ -6,12 +6,13 @@ class Light extends MovableObject {
 
     constructor() {
         super().loadImage('img/3_background/layers/1_light/1.png')
-        this.posX = -50;
         this.animate();
     }
 
 
     animate() {
-        this.moveLeft();
+        setInterval(() => {
+this.posX = world.character.posX - 50;
+        }, 1000 / 100);
     }
 }
