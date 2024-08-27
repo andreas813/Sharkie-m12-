@@ -2,14 +2,14 @@ class MovableObject {
     posX = 0;
     posY = 50;
     img;
-    height = 100;
-    width = 100;
+    height = 200;
+    width = 200;
     imageCache = {};
     currentImage = 0;
     speed = 0.10;
     otherDirection = false;
     speedY = 0;
-    acceleration = 0.01;
+    acceleration = 0.03;
 
 
     loadImage(path) {
@@ -59,11 +59,11 @@ class MovableObject {
 
 
     isAboveGround() {
-        return this.posY < 50;
+        return this.posY < 260;
     }
 
 
     jump() {
-        this.speedY = 1;
+        this.speedY = 3.25;
     }
 }

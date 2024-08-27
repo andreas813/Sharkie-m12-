@@ -1,7 +1,7 @@
 class Light extends MovableObject {
     posY = 0;
-    width = 350;
-    height = 150;
+    width = 700;
+    height = 300;
 
 
     constructor() {
@@ -12,7 +12,7 @@ class Light extends MovableObject {
 
     animate() {
         setInterval(() => {
-this.posX = world.character.posX - 50;
+            this.posX = world.character.posX + 50;
         }, 1000 / 100);
     }
 }
