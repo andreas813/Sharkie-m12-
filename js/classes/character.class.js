@@ -30,6 +30,7 @@ class Character extends MovableObject {
     swimmingSound = new Audio('audio/swimming.mp3');
     posY = 0;
 
+    
     constructor() {
         super().loadImage('img/1_sharkie/3_swim/1.png');
         this.loadImages(this.imagesSwim);

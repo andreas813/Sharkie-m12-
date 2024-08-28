@@ -13,11 +13,26 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
+        this.checkCollisions();
     }
 
 
-    setWorld() {
-        this.character.world = this;
+    setWorld() { this.character.world = this; }
+
+
+    checkCollisions() {
+        setInterval(() => {
+            this.level.enemies.forEach(enemy => {
+                if (this.character.isColliding(enemy)) {
+                    console.log('Collision with character ', enemy);
+                    if (this.character.energy > 0) {
+                        console.log('Energy left:', this.character.energy)
+                        this.character.energy -= 10
+                    }
+                    else { console.log('Character has no energy left!') };
+                }
+            });
+        }, 1000 / 2);
     }
 
 
@@ -30,38 +45,34 @@ class World {
         this.addToMap(this.character);
         this.ctx.translate(-this.cameraX, 0);
         self = this;
-        requestAnimationFrame(function () {
-            self.draw();
-        });
+        requestAnimationFrame(function () { self.draw(); });
 
     };
 
 
     addObjectsToMap(objects) {
-        objects.forEach(object => {
-            this.addToMap(object);
-        });
+        objects.forEach(object => { this.addToMap(object); });
     }
 
 
     addToMap(movObj) {
-        if (movObj.otherDirection) {
-            this.ctx.save();
-            this.ctx.translate(movObj.width, 0);
-            this.ctx.scale(-1, 1);
-            movObj.posX *= -1;
-        }
-        this.ctx.drawImage(movObj.img, movObj.posX, movObj.posY, movObj.width, movObj.height)
-        this.ctx.beginPath();
-        this.ctx.lineWidth = '2';
-        this.ctx.strokeStyle = 'red';
-        this.ctx.rect(movObj.posX, movObj.posY, movObj.width, movObj.height);
-        this.ctx.stroke();
-        if (movObj.otherDirection) {
-            movObj.posX *= -1;
-            this.ctx.restore();
-        }
+        if (movObj.otherDirection) { this.flipImage(movObj); }
+        movObj.draw(this.ctx);
+        movObj.drawFrame(this.ctx);
+        if (movObj.otherDirection) { this.flipImageBack(movObj); }
     };
 
 
+    flipImage(movObj) {
+        this.ctx.save();
+        this.ctx.translate(movObj.width, 0);
+        this.ctx.scale(-1, 1);
+        movObj.posX *= -1;
+    }
+
+
+    flipImageBack(movObj) {
+        movObj.posX *= -1;
+        this.ctx.restore();
+    }
 }
