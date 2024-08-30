@@ -25,15 +25,37 @@ class Character extends MovableObject {
         'img/1_sharkie/3_swim/5.png',
         'img/1_sharkie/3_swim/6.png',
     ];
+    imagesDead = [
+        'img/1_sharkie/6_dead/1_poisoned/1.png',
+        'img/1_sharkie/6_dead/1_poisoned/2.png',
+        'img/1_sharkie/6_dead/1_poisoned/3.png',
+        'img/1_sharkie/6_dead/1_poisoned/4.png',
+        'img/1_sharkie/6_dead/1_poisoned/5.png',
+        'img/1_sharkie/6_dead/1_poisoned/6.png',
+        'img/1_sharkie/6_dead/1_poisoned/7.png',
+        'img/1_sharkie/6_dead/1_poisoned/8.png',
+        'img/1_sharkie/6_dead/1_poisoned/9.png',
+        'img/1_sharkie/6_dead/1_poisoned/10.png',
+        'img/1_sharkie/6_dead/1_poisoned/11.png',
+        'img/1_sharkie/6_dead/1_poisoned/12.png',
+    ]
+    imagesHurt = [
+        'img/1_sharkie/5_hurt/1_poisoned/1.png',
+        'img/1_sharkie/5_hurt/1_poisoned/2.png',
+        'img/1_sharkie/5_hurt/1_poisoned/3.png',
+        'img/1_sharkie/5_hurt/1_poisoned/4.png',
+    ]
     world;
     speed = 3;
     swimmingSound = new Audio('audio/swimming.mp3');
     posY = 0;
 
-    
+
     constructor() {
         super().loadImage('img/1_sharkie/3_swim/1.png');
         this.loadImages(this.imagesSwim);
+        this.loadImages(this.imagesDead);
+        this.loadImages(this.imagesHurt);
         this.applyGravity();
         this.animate();
     }
@@ -59,7 +81,9 @@ class Character extends MovableObject {
             this.world.cameraX = -this.posX + 25;
         }, 1000 / 60);
         setInterval(() => {
-            if (this.world.keyboard.rightKey || this.world.keyboard.leftKey || this.isAboveGround()) {
+            if (this.isDead()) { this.playAnimation(this.imagesDead); }
+            else if (this.isHurt()) { this.playAnimation(this.imagesHurt); }
+            else if (this.world.keyboard.rightKey || this.world.keyboard.leftKey || this.isAboveGround()) {
                 this.playAnimation(this.imagesSwim);
             }
         }, 1000 / 8);

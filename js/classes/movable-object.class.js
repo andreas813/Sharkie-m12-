@@ -11,6 +11,7 @@ class MovableObject {
     speedY = 0;
     acceleration = 0.03;
     energy = 100;
+    lastHurt = 0;
 
 
     loadImage(path) {
@@ -92,4 +93,21 @@ class MovableObject {
     // }
 
 
+    hit() {
+        this.energy -= 10;
+        if (this.energy < 0) { this.energy = 0 }
+        else {this.lastHurt = new Date().getTime();}
+        console.log('Energy left:', this.energy);
+    }
+
+
+    isDead() {
+        return this.energy == 0;
+    }
+
+
+    isHurt() {
+        let timepassed = new Date().getTime() - this.lastHurt;
+        return timepassed < 1000;
+    }
 }

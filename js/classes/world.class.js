@@ -25,10 +25,7 @@ class World {
             this.level.enemies.forEach(enemy => {
                 if (this.character.isColliding(enemy)) {
                     console.log('Collision with character ', enemy);
-                    if (this.character.energy > 0) {
-                        console.log('Energy left:', this.character.energy)
-                        this.character.energy -= 10
-                    }
+                    if (this.character.energy > 0) { this.character.hit(); }
                     else { console.log('Character has no energy left!') };
                 }
             });
