@@ -1,33 +1,10 @@
-class MovableObject {
-    posX = 0;
-    posY = 50;
-    img;
-    height = 200;
-    width = 200;
-    imageCache = {};
-    currentImage = 0;
+class MovableObject extends DrawableObject {
     speed = 0.10;
     otherDirection = false;
     speedY = 0;
     acceleration = 0.03;
     energy = 100;
     lastHurt = 0;
-
-
-    loadImage(path) {
-        this.img = new Image();
-        this.img.src = path;
-    }
-
-
-    loadImages(array) {
-        array.forEach(
-            path => {
-                let img = new Image();
-                img.src = path;
-                this.imageCache[path] = img;
-            });
-    }
 
 
     playAnimation(images) {
@@ -60,27 +37,8 @@ class MovableObject {
     jump() { this.speedY = 3.25; }
 
 
-    draw(ctx) {
-        ctx.drawImage(this.img, this.posX, this.posY, this.width, this.height)
-    }
-
-
-    drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Pufferfish) {
-            ctx.beginPath();
-            ctx.lineWidth = '2';
-            ctx.strokeStyle = 'red';
-            ctx.rect(this.posX, this.posY, this.width, this.height);
-            ctx.stroke();
-        }
-    }
-
-
     isColliding(obj) {
-        return this.posX + this.width > obj.posX &&
-            this.posY + this.height > obj.posY &&
-            this.posX < obj.posX &&
-            this.posY < obj.posY + obj.height
+        return this.posX + this.width > obj.posX && this.posY + this.height > obj.posY && this.posX < obj.posX && this.posY < obj.posY + obj.height;
     }
 
 
@@ -94,9 +52,11 @@ class MovableObject {
 
 
     hit() {
-        this.energy -= 10;
+        this.energy -= 20;
+        let newPercentage = world.statusBar.percentage - 20;
+        world.statusBar.setPercentage(newPercentage);
         if (this.energy < 0) { this.energy = 0 }
-        else {this.lastHurt = new Date().getTime();}
+        else { this.lastHurt = new Date().getTime(); };
         console.log('Energy left:', this.energy);
     }
 
