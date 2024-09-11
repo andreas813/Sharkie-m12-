@@ -38,13 +38,13 @@ class Character extends MovableObject {
         'img/1_sharkie/6_dead/1_poisoned/10.png',
         'img/1_sharkie/6_dead/1_poisoned/11.png',
         'img/1_sharkie/6_dead/1_poisoned/12.png',
-    ]
+    ];
     imagesHurt = [
         'img/1_sharkie/5_hurt/1_poisoned/1.png',
         'img/1_sharkie/5_hurt/1_poisoned/2.png',
         'img/1_sharkie/5_hurt/1_poisoned/3.png',
         'img/1_sharkie/5_hurt/1_poisoned/4.png',
-    ]
+    ];
     world;
     speed = 3;
     swimmingSound = new Audio('audio/swimming.mp3');
