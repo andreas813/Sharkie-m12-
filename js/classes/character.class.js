@@ -64,19 +64,21 @@ class Character extends MovableObject {
     animate() {
         setInterval(() => {
             this.swimmingSound.volume = 0.05;
-            if (this.world.keyboard.rightKey && this.posX < this.world.level.levelEndX) {
-                this.moveRight();
-                this.otherDirection = false;
-                this.swimmingSound.play();
-            }
-            if (this.world.keyboard.leftKey && this.posX > 0) {
-                this.moveLeft();
-                this.otherDirection = true;
-                this.swimmingSound.play();
-            }
-            if (this.world.keyboard.upKey && !this.isAboveGround()) {
-                this.jump();
-                this.swimmingSound.play();
+            if (!world.character.isDead()) {
+                if (this.world.keyboard.rightKey && this.posX < this.world.level.levelEndX) {
+                    this.moveRight();
+                    this.otherDirection = false;
+                    this.swimmingSound.play();
+                }
+                if (this.world.keyboard.leftKey && this.posX > 0) {
+                    this.moveLeft();
+                    this.otherDirection = true;
+                    this.swimmingSound.play();
+                }
+                if (this.world.keyboard.upKey && !this.isAboveGround()) {
+                    this.jump();
+                    this.swimmingSound.play();
+                }
             }
             this.world.cameraX = -this.posX + 25;
         }, 1000 / 60);

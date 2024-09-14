@@ -8,7 +8,10 @@ class MovableObject extends DrawableObject {
 
 
     playAnimation(images) {
-        if (this.currentImage >= images.length) { this.currentImage = 0; }
+        if (world.character.isDead() && this.currentImage >= images.length) {
+            this.currentImage = (images.length - 1);
+        }
+        else if (this.currentImage >= images.length) { this.currentImage = 0; }
         let path = images[this.currentImage];
         this.img = this.imageCache[path];
         this.currentImage++;
@@ -18,7 +21,9 @@ class MovableObject extends DrawableObject {
     moveRight() { this.posX += this.speed; }
 
 
-    moveLeft() { this.posX -= this.speed; }
+    moveLeft() {
+        this.posX -= this.speed;
+    }
 
 
     applyGravity() {
@@ -35,6 +40,7 @@ class MovableObject extends DrawableObject {
         if (this instanceof ThrowableObject) { return true; }
         else { return this.posY < 260; }
     }
+
 
     jump() { this.speedY = 3.25; }
 
