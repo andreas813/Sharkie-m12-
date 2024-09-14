@@ -59,7 +59,6 @@ class MovableObject extends DrawableObject {
         world.statusBar.setPercentage(newPercentage);
         if (this.energy < 0) { this.energy = 0 }
         else { this.lastHurt = new Date().getTime(); };
-        console.log('Energy left:', this.energy);
     }
 
 

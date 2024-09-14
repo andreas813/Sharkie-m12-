@@ -33,9 +33,7 @@ class World {
     checkCollisions() {
         this.level.enemies.forEach(enemy => {
             if (this.character.isColliding(enemy)) {
-                console.log('Collision with character ', enemy);
-                if (this.character.energy > 0) { this.character.hit(); }
-                else { console.log('Character has no energy left!') };
+                if (this.character.energy > 0) { this.character.hit(); };
             };
         });
     }

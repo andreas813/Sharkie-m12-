@@ -1,3 +1,11 @@
+@font-face {
+    font-family: 'Creepster';
+    src: url('fonts/Nabla-Regular-VariableFont_EDPT\,EHLT.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
 html,
 body {
     height: 100%;
@@ -7,27 +15,50 @@ body {
 body {
     background: url('img/background.jpg') no-repeat center center fixed;
     background-size: cover;
+    font-family: 'Creepster', sans-serif !important;
 }
 
 
 canvas {
     background-color: #000;
-    display: block;
     border: 1px solid black;
 }
 
 
-h1 {
-    background-color: dodgerblue;
-    border-radius: 48px;
-    border: 1px solid #000;
-    color: #ccc !important;
-    /* -webkit-text-stroke: 1px black; */
+h1.custom-font {
+    font-family: 'Nabla', sans-serif, !important;
     text-shadow:
         1px 1px 0 #000,
         -1px -1px 0 #000,
         1px -1px 0 #000,
         -1px 1px 0 #000;
+    filter: hue-rotate(100deg);
+}
+
+
+.icon-overlay {
+    font-size: 24px;
+    color: #fff;
+    text-shadow:
+    1px 1px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000;
+    cursor: pointer;
+}
+
+
+.title {
+    background-color: dodgerblue;
+    border-radius: 64px;
+    border: 1px solid #000;
+    color: #ccc !important;
+}
+
+
+.game {
+    position: relative;
+    display: inline-block;
 }
 
 
