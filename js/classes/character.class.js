@@ -47,7 +47,6 @@ class Character extends MovableObject {
     ];
     world;
     speed = 3;
-    swimmingSound = new Audio('audio/swimming.mp3');
     posY = 0;
     offset = {
         top: -100,
@@ -62,37 +61,40 @@ class Character extends MovableObject {
         this.loadImages(this.imagesSwim);
         this.loadImages(this.imagesDead);
         this.loadImages(this.imagesHurt);
+        this.loadImages(this.imagesIdle);
         this.applyGravity();
         this.animate();
+        this.move();
+        this.swimmingSound = new Audio('audio/swimming.mp3');
+        this.swimmingSound.volume = 0.05;
     }
 
 
     animate() {
         setInterval(() => {
-            this.swimmingSound.volume = 0.05;
+            if (this.isDead()) { this.playAnimation(this.imagesDead); }
+            else if (this.isHurt()) { this.playAnimation(this.imagesHurt); }
+            else if (this.world.keyboard.rightKey || this.world.keyboard.leftKey || this.isAboveGround()) { this.playAnimation(this.imagesSwim); }
+            else { this.playAnimation(this.imagesIdle); }
+        }, 1000 / 8);
+    }
+
+
+    move() {
+        setInterval(() => {
             if (!world.character.isDead()) {
                 if (this.world.keyboard.rightKey && this.posX < this.world.level.levelEndX) {
                     this.moveRight();
                     this.otherDirection = false;
-                    this.swimmingSound.play();
                 }
-                if (this.world.keyboard.leftKey && this.posX > 0) {
-                    this.moveLeft();
+                if (this.world.keyboard.leftKey) {
                     this.otherDirection = true;
-                    this.swimmingSound.play();
+                    if (this.posX > 0) { this.moveLeft(); };
                 }
-                if (this.world.keyboard.upKey && !this.isAboveGround()) {
-                    this.jump();
-                    this.swimmingSound.play();
-                }
+                if (this.world.keyboard.upKey && !this.isAboveGround()) { this.jump(); }
             }
             this.world.cameraX = -this.posX + 25;
         }, 1000 / 60);
-        setInterval(() => {
-            if (this.isDead()) { this.playAnimation(this.imagesDead); }
-            else if (this.isHurt()) { this.playAnimation(this.imagesHurt); }
-            else { this.playAnimation(this.imagesSwim); }
-        }, 1000 / 8);
     }
 
 

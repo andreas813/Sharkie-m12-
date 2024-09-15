@@ -18,11 +18,15 @@ class MovableObject extends DrawableObject {
     }
 
 
-    moveRight() { this.posX += this.speed; }
+    moveRight() {
+        this.posX += this.speed;
+        this.swimmingSound.play();
+    }
 
 
     moveLeft() {
         this.posX -= this.speed;
+        this.swimmingSound.play();
     }
 
 
@@ -42,7 +46,11 @@ class MovableObject extends DrawableObject {
     }
 
 
-    jump() { this.speedY = 3.25; }
+    jump() {
+        this.speedY = 3.25;
+        this.swimmingSound.play();
+
+    }
 
 
     isColliding(obj) {
