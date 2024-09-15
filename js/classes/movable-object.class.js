@@ -70,8 +70,8 @@ class MovableObject extends DrawableObject {
     hit() {
         if (new Date().getTime() - this.lastHurt > 2000) {
             this.energy -= 20;
-            let newPercentage = world.statusBar.percentage - 20;
-            world.statusBar.setPercentage(newPercentage);
+            let newPercentage = world.healthBar.percentage - 20;
+            world.healthBar.setPercentage(newPercentage);
             console.log('Sharky got hurt!')
             if (this.energy < 0) { this.energy = 0 }
             else { this.lastHurt = new Date().getTime(); };

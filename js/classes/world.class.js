@@ -5,7 +5,9 @@ class World {
     ctx;
     keyboard;
     cameraX = -100;
-    statusBar = new StatusBar();
+    healthBar = new HealthBar();
+    poisonBar = new PoisonBar();
+    coinBar = new CoinBar();
     throwableObjects = [new ThrowableObject()];
 
 
@@ -54,7 +56,9 @@ class World {
         this.ctx.translate(this.cameraX, 0);
         this.addObjectsToMap(this.level.backgrounds);
         this.ctx.translate(-this.cameraX, 0);
-        this.addToMap(this.statusBar);
+        this.addToMap(this.healthBar);
+        this.addToMap(this.poisonBar);
+        this.addToMap(this.coinBar);
         this.addObjectsToMap(this.level.lights);
         this.ctx.translate(this.cameraX, 0);
         this.addObjectsToMap(this.throwableObjects);

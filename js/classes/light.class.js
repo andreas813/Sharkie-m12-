@@ -1,8 +1,8 @@
 class Light extends MovableObject {
     posY = 0;
-    posX = 50;
+    posX = 40;
     width = 700;
-    height = 250;
+    height = 400;
 
 
     constructor() {
