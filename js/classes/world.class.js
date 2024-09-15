@@ -62,8 +62,8 @@ class World {
         this.addObjectsToMap(this.level.lights);
         this.ctx.translate(this.cameraX, 0);
         this.addObjectsToMap(this.throwableObjects);
-        this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
+        this.addToMap(this.character);
         this.ctx.translate(-this.cameraX, 0);
         self = this;
         requestAnimationFrame(function () { self.draw(); });

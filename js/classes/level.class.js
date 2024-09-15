@@ -2,7 +2,7 @@ class Level {
     enemies;
     lights;
     backgrounds;
-    levelEndX = 1200;
+    levelEndX = (backgroundLength - 2) * 720;
 
 
     constructor(enemies, lights, backgrounds) {

@@ -1,6 +1,7 @@
 class Endboss extends MovableObject {
     height = 500;
     width = 600;
+    posX = 4000;
     posY = 25;
     imagesFloating = [
         'img/2_enemy/3_final_enemy/2_floating/1.png',
@@ -29,7 +30,6 @@ class Endboss extends MovableObject {
     constructor() {
         super().loadImage('img/2_enemy/3_final_enemy/2_floating/1.png')
         this.loadImages(this.imagesFloating);
-        this.posX = 650;
         this.animate();
     }
 
