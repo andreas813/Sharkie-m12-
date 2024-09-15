@@ -3,7 +3,7 @@ class MovableObject extends DrawableObject {
     otherDirection = false;
     speedY = 0;
     acceleration = 0.03;
-    energy = 1000;
+    energy = 100;
     lastHurt = 0;
 
 
@@ -57,11 +57,14 @@ class MovableObject extends DrawableObject {
 
 
     hit() {
-        this.energy -= 20;
-        let newPercentage = world.statusBar.percentage - 20;
-        world.statusBar.setPercentage(newPercentage);
-        if (this.energy < 0) { this.energy = 0 }
-        else { this.lastHurt = new Date().getTime(); };
+        if (new Date().getTime() - this.lastHurt > 2000) {
+            this.energy -= 20;
+            let newPercentage = world.statusBar.percentage - 20;
+            world.statusBar.setPercentage(newPercentage);
+            console.log('Sharky got hurt!')
+            if (this.energy < 0) { this.energy = 0 }
+            else { this.lastHurt = new Date().getTime(); };
+        }
     }
 
 

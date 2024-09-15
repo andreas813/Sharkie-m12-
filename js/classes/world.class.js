@@ -28,7 +28,7 @@ class World {
                 this.checkCollisions();
                 this.checkThrowableObjects();
             }
-        }, 1000 / 2);
+        }, 1000 / 10);
     }
 
 
@@ -36,7 +36,6 @@ class World {
         this.level.enemies.forEach(enemy => {
             if (this.character.isColliding(enemy)) {
                 if (this.character.energy > 0) { this.character.hit(); };
-                console.log(`Sharky is colliding with `, enemy)
             };
         });
     }
