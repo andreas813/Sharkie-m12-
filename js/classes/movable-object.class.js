@@ -3,7 +3,7 @@ class MovableObject extends DrawableObject {
     otherDirection = false;
     speedY = 0;
     acceleration = 0.03;
-    energy = 100;
+    energy = 1000;
     lastHurt = 0;
 
 
@@ -46,17 +46,14 @@ class MovableObject extends DrawableObject {
 
 
     isColliding(obj) {
-        return this.posX + this.width > obj.posX && this.posY + this.height > obj.posY && this.posX < obj.posX && this.posY < obj.posY + obj.height;
+        return (this.posX - this.offset.left) + (this.width + this.offset.right) > obj.posX - obj.offset.left &&
+            (this.posY - this.offset.top) + (this.height + this.offset.bottom) > obj.posY - obj.offset.top &&
+            (this.posX - this.offset.left) < (obj.posX - obj.offset.left) + (obj.width + obj.offset.right) &&
+            (this.posY - this.offset.top) < (obj.posY - obj.offset.top) + (obj.height + obj.offset.bottom);
     }
-
-
-    // // Bessere Formel zur Kollisionsberechnung (Genauer)
-    // isColliding(obj) {
-    //     return (this.X + this.width) >= obj.X && this.X <= (obj.X + obj.width) &&
-    //         (this.Y + this.offsetY + this.height) >= obj.Y &&
-    //         (this.Y + this.offsetY) <= (obj.Y + obj.height) &&
-    //         obj.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
-    // }
+    // // Left from "Bessere Formel zur Kollisionsberechnung (Genauer)":
+    //     && obj.onCollisionCourse; 
+    //     // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
 
 
     hit() {

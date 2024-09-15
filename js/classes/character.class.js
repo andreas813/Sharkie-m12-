@@ -49,6 +49,12 @@ class Character extends MovableObject {
     speed = 3;
     swimmingSound = new Audio('audio/swimming.mp3');
     posY = 0;
+    offset = {
+        top: -100,
+        left: -60,
+        right: -100,
+        bottom: -150
+    };
 
 
     constructor() {

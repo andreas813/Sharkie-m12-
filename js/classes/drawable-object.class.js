@@ -6,6 +6,12 @@ class DrawableObject {
     posY = 50;
     height = 200;
     width = 200;
+    offset = {
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
+    };
 
 
     loadImage(path) {
@@ -30,14 +36,19 @@ class DrawableObject {
 
 
     drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Pufferfish) {
+        if (this instanceof Character || this instanceof Pufferfish || this instanceof Endboss) {
             ctx.beginPath();
             ctx.lineWidth = '2';
             ctx.strokeStyle = 'red';
-            ctx.rect(this.posX, this.posY, this.width, this.height);
+            ctx.rect(
+                this.posX - this.offset.left,
+                this.posY - this.offset.top,
+                this.width + this.offset.right,
+                this.height + this.offset.bottom
+            );
             ctx.stroke();
         }
     }
 
-    
+
 }
