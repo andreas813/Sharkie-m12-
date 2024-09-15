@@ -5,13 +5,17 @@ class MovableObject extends DrawableObject {
     acceleration = 0.03;
     energy = 100;
     lastHurt = 0;
+    lastMove = new Date().getTime();
 
 
     playAnimation(images) {
-        if (world.character.isDead() && this.currentImage >= images.length) {
+        if (this.isDead() && this.currentImage >= images.length) {
             this.currentImage = (images.length - 1);
         }
-        else if (this.currentImage >= images.length) { this.currentImage = 0; }
+        else if (this.isSleeping() && this.currentImage >= images.length) {
+            this.currentImage = (images.length - 4);
+        }
+        else if (this.currentImage >= images.length) { this.currentImage = 0; };
         let path = images[this.currentImage];
         this.img = this.imageCache[path];
         this.currentImage++;
@@ -20,13 +24,13 @@ class MovableObject extends DrawableObject {
 
     moveRight() {
         this.posX += this.speed;
-        this.swimmingSound.play();
+        this.lastMove = new Date().getTime();
     }
 
 
     moveLeft() {
         this.posX -= this.speed;
-        this.swimmingSound.play();
+        this.lastMove = new Date().getTime();
     }
 
 
@@ -48,8 +52,7 @@ class MovableObject extends DrawableObject {
 
     jump() {
         this.speedY = 3.25;
-        this.swimmingSound.play();
-
+        this.lastMove = new Date().getTime();
     }
 
 
@@ -84,5 +87,13 @@ class MovableObject extends DrawableObject {
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHurt;
         return timepassed < 1000;
+    }
+
+
+    isSleeping() {
+        if (this instanceof Character) {
+            let timepassed = new Date().getTime() - this.lastMove;
+            return timepassed > 15000;
+        }
     }
 }
