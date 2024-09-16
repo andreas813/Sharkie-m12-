@@ -37,7 +37,10 @@ class World {
     checkCollisions() {
         this.level.enemies.forEach(enemy => {
             if (this.character.isColliding(enemy)) {
-                if (this.character.energy > 0) { this.character.hit(); };
+                if (this.character.energy > 0) {
+                    if (enemy instanceof JellyfishSuper) { this.character.damage('shock') }
+                    else { this.character.damage('normal'); }
+                };
             };
         });
     }

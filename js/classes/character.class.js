@@ -60,7 +60,26 @@ class Character extends MovableObject {
         'img/1_sharkie/2_long_idle/i12.png',
         'img/1_sharkie/2_long_idle/i13.png',
         'img/1_sharkie/2_long_idle/i14.png',
-    ]
+    ];
+    imagesShocked = [
+        'img/1_sharkie/5_hurt/2_electric_shock/1.png',
+        'img/1_sharkie/5_hurt/2_electric_shock/2.png',
+        'img/1_sharkie/5_hurt/2_electric_shock/3.png',
+    ];
+    imagesElectrocuted = [
+        'img/1_sharkie/6_dead/2_electro_shock/1.png',
+        'img/1_sharkie/6_dead/2_electro_shock/2.png',
+        'img/1_sharkie/6_dead/2_electro_shock/3.png',
+        'img/1_sharkie/6_dead/2_electro_shock/4.png',
+        'img/1_sharkie/6_dead/2_electro_shock/5.png',
+        'img/1_sharkie/6_dead/2_electro_shock/6.png',
+        'img/1_sharkie/6_dead/2_electro_shock/7.png',
+        'img/1_sharkie/6_dead/2_electro_shock/8.png',
+        'img/1_sharkie/6_dead/2_electro_shock/9.png',
+        'img/1_sharkie/6_dead/2_electro_shock/10.png',
+    ];
+
+
     world;
     speed = 3;
     posY = 75;
@@ -79,6 +98,8 @@ class Character extends MovableObject {
         this.loadImages(this.imagesHurt);
         this.loadImages(this.imagesIdle);
         this.loadImages(this.imagesSleep);
+        this.loadImages(this.imagesShocked);
+        this.loadImages(this.imagesElectrocuted);
         this.applyGravity();
         this.animate();
         this.move();
@@ -89,7 +110,11 @@ class Character extends MovableObject {
 
     animate() {
         setInterval(() => {
-            if (this.isDead()) { this.playAnimation(this.imagesDead); }
+            if (this.isDead()) {
+                if (this.lastDamage.shock > this.lastDamage.normal) { this.playAnimation(this.imagesElectrocuted) }
+                else { this.playAnimation(this.imagesDead); };
+            }
+            else if (this.isShocked()) { this.playAnimation(this.imagesShocked); }
             else if (this.isHurt()) { this.playAnimation(this.imagesHurt); }
             else if (this.world.keyboard.rightKey || this.world.keyboard.leftKey || this.isAboveGround()) { this.playAnimation(this.imagesSwim); }
             else if (this.isSleeping()) { this.playAnimation(this.imagesSleep); }
@@ -114,7 +139,6 @@ class Character extends MovableObject {
                 if (this.world.keyboard.upKey && !this.isAboveGround()) {
                     this.jump();
                     this.swimmingSound.play();
-
                 }
             }
             this.world.cameraX = -this.posX + 25;
