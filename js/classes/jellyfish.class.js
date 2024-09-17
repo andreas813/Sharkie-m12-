@@ -28,8 +28,8 @@ class Jellyfish extends MovableObject {
         super().loadImage('img/2_enemy/2_jelly_fish/regular_damage/lila_1.png')
         const color = Math.round(Math.random());
         this.loadImages(this.imagesSwim[color]);
-        this.posX = 1500 + Math.random() * 1500;
-        this.speed = 0.5 + Math.random() * 0.5;
+        this.posX = levelEndX * (0.4 + 0.2 * Math.random());
+        this.speed = 0.5 + Math.random() * 0.1;
         this.animate(color);
     }
 

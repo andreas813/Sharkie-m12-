@@ -126,7 +126,7 @@ class Character extends MovableObject {
     move() {
         setInterval(() => {
             if (!world.character.isDead()) {
-                if (this.world.keyboard.rightKey && this.posX < this.world.level.levelEndX) {
+                if (this.world.keyboard.rightKey && this.posX < levelEndX) {
                     this.moveRight();
                     this.otherDirection = false;
                     this.swimmingSound.play();

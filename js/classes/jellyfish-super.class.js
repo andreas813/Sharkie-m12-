@@ -28,8 +28,8 @@ class JellyfishSuper extends MovableObject {
         super().loadImage('img/2_enemy/2_jelly_fish/super_dangerous/green_1.png')
         const color = Math.round(Math.random());
         this.loadImages(this.imagesSwim[color]);
-        this.posX = 3000 + Math.random() * 750;
-        this.speed = 0.25 + Math.random() * 0.25;
+        this.posX = levelEndX * (0.6 + 0.2 * Math.random());
+        this.speed = 0.25 + Math.random() * 0.5;
         this.animate(color);
     }
 

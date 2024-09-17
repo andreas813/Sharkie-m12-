@@ -86,13 +86,13 @@ class MovableObject extends DrawableObject {
         if (this.lastMove.direction == 'right') {
             for (let i = 0; i < 32; i++) {
                 this.moveLeft();
-                await this.delay(10);
+                await this.delay(25);
             };
         }
         else {
             for (let i = 0; i < 32; i++) {
                 this.moveRight();
-                await this.delay(10);
+                await this.delay(25);
             };
         }
     }
