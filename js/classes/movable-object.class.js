@@ -81,6 +81,14 @@ class MovableObject extends DrawableObject {
     }
 
 
+    pickup(type) {
+        if (type == 'coin') {
+            let newPercentage = world.coinBar.percentage - 20;
+            world.coinBar.setPercentage(newPercentage);
+        }
+    }
+
+
     async shockDamage() {
         this.speedY = 1.5;
         if (this.lastMove.direction == 'right') {

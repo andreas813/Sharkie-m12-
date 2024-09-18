@@ -1,21 +1,30 @@
 class Coin extends MovableObject {
-posY = 350;
-height = 75;
-width = 75;
+    posY = 170;
+    height = 75;
+    width = 75;
+    static coinAmount = 0;
 
 
-    constructor(factor) {
+    constructor() {
         super().loadImage('img/4_marcadores/1_coins/1.png');
-        this.posX = (levelEndX / 20) * (factor + 2);
+        this.posX = (levelEndX / 8) * (Coin.coinAmount + 1);
+        this.posY += Math.random() * 180;
+        Coin.coinAmount++;
         this.animate();
     }
 
 
     animate() {
+        let coinPosition = 'bottom';
         setInterval(() => {
-            if (this.posY == 350)
-            {this.posY += 5}
-            else {this.posY -= 5};
-        }, 1000 / 1.25);
+            if (coinPosition == 'top') {
+                this.posY += 5;
+                coinPosition = 'bottom';
+            }
+            else {
+                this.posY -= 5;
+                coinPosition = 'top';
+            };
+        }, 1000 / (1 + Math.random() * 0.25));
     }
 }

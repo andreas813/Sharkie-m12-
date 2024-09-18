@@ -43,6 +43,14 @@ class World {
                 };
             };
         });
+        this.level.collectables.forEach(collectable => {
+            if (this.character.isColliding(collectable)) {
+                this.character.pickup('coin');
+                delete collectable.posX;
+                delete collectable.posY;
+
+            };
+        });
     }
 
 
