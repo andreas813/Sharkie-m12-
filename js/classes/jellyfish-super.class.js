@@ -16,6 +16,21 @@ class JellyfishSuper extends MovableObject {
             'img/2_enemy/2_jelly_fish/super_dangerous/pink_4.png',
         ],
     ]
+    imagesDead = [
+        [
+            'img/2_enemy/2_jelly_fish/dead/green/g1.png',
+            'img/2_enemy/2_jelly_fish/dead/green/g2.png',
+            'img/2_enemy/2_jelly_fish/dead/green/g3.png',
+            'img/2_enemy/2_jelly_fish/dead/green/g4.png',
+        ],
+        [
+            'img/2_enemy/2_jelly_fish/dead/pink/p1.png',
+            'img/2_enemy/2_jelly_fish/dead/pink/p2.png',
+            'img/2_enemy/2_jelly_fish/dead/pink/p3.png',
+            'img/2_enemy/2_jelly_fish/dead/pink/p4.png',
+        ],
+
+    ]
     offset = {
         top: -15,
         left: -15,
@@ -28,6 +43,7 @@ class JellyfishSuper extends MovableObject {
         super().loadImage('img/2_enemy/2_jelly_fish/super_dangerous/green_1.png')
         const color = Math.round(Math.random());
         this.loadImages(this.imagesSwim[color]);
+        this.loadImages(this.imagesDead[color]);
         this.posX = levelEndX * (0.6 + 0.2 * Math.random());
         this.speed = 0.25 + Math.random() * 0.5;
         this.animate(color);
@@ -36,7 +52,11 @@ class JellyfishSuper extends MovableObject {
 
     animate(color) {
         setInterval(() => {
-            this.playAnimation(this.imagesSwim[color]);
+            if (this.energy < 1) {
+                this.playAnimation(this.imagesDead[color]);
+                setTimeout(() => { this.removeObject(this); }, 2000);
+            }
+            else { this.playAnimation(this.imagesSwim[color]); };
         }, 1000 / 4);
         setInterval(() => {
             this.moveLeft();

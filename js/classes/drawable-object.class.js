@@ -58,4 +58,16 @@ class DrawableObject {
     }
 
 
+    delay(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+
+    removeObject(obj) {
+        delete obj.posX;
+        delete obj.posY;
+        // for (let key in obj) {
+        //     if (obj.hasOwnProperty(key)) { delete obj[key]; };
+        // };
+    }
 }

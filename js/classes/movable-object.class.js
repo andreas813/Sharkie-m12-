@@ -9,7 +9,7 @@ class MovableObject extends DrawableObject {
 
 
     playAnimation(images) {
-        if ((this.isDead() || this.lastDamage.shock > this.lastDamage.normal) && this.currentImage >= images.length) {
+        if ((this instanceof Character && (this.isDead() || this.lastDamage.shock > this.lastDamage.normal)) && this.currentImage >= images.length) {
             this.currentImage = (images.length - 1);
         }
         else if (this.isSleeping() && this.currentImage >= images.length) {
@@ -46,10 +46,7 @@ class MovableObject extends DrawableObject {
     }
 
 
-    isAboveGround() {
-        if (this instanceof ThrowableObject) { return true; }
-        else { return this.posY < 260; }
-    }
+    isAboveGround() { return this.posY < 260; }
 
 
     jump() {
@@ -74,6 +71,7 @@ class MovableObject extends DrawableObject {
             this.energy -= 20;
             let newPercentage = world.healthBar.percentage - 20;
             world.healthBar.setPercentage(newPercentage);
+            this.lastMove.time = new Date().getTime();
             if (this.energy < 0) { this.energy = 0 }
             else { this.lastDamage[type] = new Date().getTime(); };
             if (type == 'shock') { this.shockDamage(); };
@@ -106,11 +104,6 @@ class MovableObject extends DrawableObject {
     }
 
 
-    delay(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
-
-
     isHurt() {
         let timepassed = new Date().getTime() - this.lastDamage.normal;
         return timepassed < 1500;
@@ -132,7 +125,7 @@ class MovableObject extends DrawableObject {
 
 
     isDead() {
-        return this.energy == 0;
+        return this.energy < 1;
     }
 
 

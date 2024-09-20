@@ -35,6 +35,13 @@ class World {
 
 
     checkCollisions() {
+        this.checkCollisionEnemy();
+        this.checkCollisionCoin();
+        this.checkCollisionBubble();
+    }
+
+
+    checkCollisionEnemy() {
         this.level.enemies.forEach(enemy => {
             if (this.character.isColliding(enemy)) {
                 if (this.character.energy > 0) {
@@ -43,6 +50,10 @@ class World {
                 };
             };
         });
+    }
+
+
+    checkCollisionCoin() {
         this.level.collectables.forEach(collectable => {
             if (this.character.isColliding(collectable)) {
                 this.character.pickup('coin');
@@ -54,10 +65,23 @@ class World {
     }
 
 
+    checkCollisionBubble() {
+        this.throwableObjects.forEach(throwable => {
+            this.level.enemies.forEach(enemy => {
+                if (throwable.isColliding(enemy)) {
+                    enemy.energy = 0;
+                    delete throwable.posX;
+                    delete throwable.posY;
+                };
+            });
+        });
+    }
+
+
     checkThrowableObjects() {
         if (this.keyboard.spaceKey) {
-            let bottle = new ThrowableObject(this.character.posX, this.character.posY);
-            this.throwableObjects.push(bottle);
+            let bubble = new ThrowableObject(this.character.posX, this.character.posY);
+            this.throwableObjects.push(bubble);
         }
     }
 
