@@ -78,8 +78,6 @@ class Character extends MovableObject {
         'img/1_sharkie/6_dead/2_electro_shock/9.png',
         'img/1_sharkie/6_dead/2_electro_shock/10.png',
     ];
-
-
     world;
     speed = 3;
     posY = 75;

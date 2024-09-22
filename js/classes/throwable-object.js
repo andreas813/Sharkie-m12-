@@ -1,15 +1,22 @@
 class ThrowableObject extends MovableObject {
-    constructor(posX, posY) {
-        super().loadImage('img/1_sharkie/4_attack/bubble_trap/bubble.png');
+    constructor(posX, posY, direction) {
+        super();
+        this.loadImage('img/1_sharkie/4_attack/bubble_trap/bubble.png');
         this.posX = posX + 150;
         this.posY = posY + 95;
         this.width = 60;
         this.height = 60;
-        this.shoot();
+        this.shoot(direction);
     }
 
 
-    shoot() {
-        setInterval(() => { this.posX += 2; }, 1000 / 60);
+    shoot(direction) {
+        if (direction === 'right') { setInterval(() => { this.posX += 2; }, 1000 / 60); }
+        else {
+            setInterval(() => { this.posX -= 2; }, 1000 / 60);
+            this.posX -= 150;
+        };
     }
+
+
 }

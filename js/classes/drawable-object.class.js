@@ -42,7 +42,8 @@ class DrawableObject {
             this instanceof Endboss ||
             this instanceof Jellyfish ||
             this instanceof JellyfishSuper ||
-            this instanceof Coin
+            this instanceof Coin ||
+            this instanceof Poison
         ) {
             ctx.beginPath();
             ctx.lineWidth = '2';

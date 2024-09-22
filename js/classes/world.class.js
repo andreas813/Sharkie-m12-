@@ -80,7 +80,7 @@ class World {
 
     checkThrowableObjects() {
         if (this.keyboard.spaceKey) {
-            let bubble = new ThrowableObject(this.character.posX, this.character.posY);
+            let bubble = new ThrowableObject(this.character.posX, this.character.posY, this.character.lastMove.direction);
             this.throwableObjects.push(bubble);
         }
     }
