@@ -128,10 +128,12 @@ class Character extends MovableObject {
                     this.moveRight();
                     this.otherDirection = false;
                     this.swimmingSound.play();
+                    this.lastMove.direction = 'right';
                 }
                 if (this.world.keyboard.leftKey) {
                     this.otherDirection = true;
                     this.swimmingSound.play();
+                    this.lastMove.direction = 'left';
                     if (this.posX > 0) { this.moveLeft(); };
                 }
                 if (this.world.keyboard.upKey && !this.isAboveGround()) {

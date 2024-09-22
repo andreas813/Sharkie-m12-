@@ -5,7 +5,7 @@ class MovableObject extends DrawableObject {
     acceleration = 0.03;
     energy = 100;
     lastDamage = { "normal": 0, "shock": 0 };
-    lastMove = { "time": new Date().getTime(), "direction": 'right' };
+    lastMove = { "time": new Date().getTime(), "direction": "" };
 
 
     playAnimation(images) {
@@ -25,14 +25,12 @@ class MovableObject extends DrawableObject {
     moveRight() {
         this.posX += this.speed;
         this.lastMove.time = new Date().getTime();
-        this.lastMove.direction = 'right';
     }
 
 
     moveLeft() {
         this.posX -= this.speed;
         this.lastMove.time = new Date().getTime();
-        this.lastMove.direction = 'left';
     }
 
 

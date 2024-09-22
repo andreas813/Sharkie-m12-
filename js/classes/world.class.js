@@ -9,6 +9,7 @@ class World {
     poisonBar = new PoisonBar();
     coinBar = new CoinBar();
     throwableObjects = [new ThrowableObject()];
+    lastShot = 0;
 
 
     constructor(canvas) {
@@ -28,7 +29,7 @@ class World {
         setInterval(() => {
             if (!world.character.isDead()) {
                 this.checkCollisions();
-                this.checkThrowableObjects();
+                this.shootBubble();
             }
         }, 1000 / 10);
     }
@@ -78,8 +79,9 @@ class World {
     }
 
 
-    checkThrowableObjects() {
-        if (this.keyboard.spaceKey) {
+    shootBubble() {
+        if (this.keyboard.spaceKey && (new Date().getTime() - this.lastShot > 1500)) {
+            this.lastShot = new Date().getTime();
             let bubble = new ThrowableObject(this.character.posX, this.character.posY, this.character.lastMove.direction);
             this.throwableObjects.push(bubble);
         }
