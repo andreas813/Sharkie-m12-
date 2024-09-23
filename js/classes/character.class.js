@@ -78,6 +78,16 @@ class Character extends MovableObject {
         'img/1_sharkie/6_dead/2_electro_shock/9.png',
         'img/1_sharkie/6_dead/2_electro_shock/10.png',
     ];
+    imagesFinslap = [
+        'img/1_sharkie/4_attack/fin_slap/1.png',
+        'img/1_sharkie/4_attack/fin_slap/2.png',
+        'img/1_sharkie/4_attack/fin_slap/3.png',
+        'img/1_sharkie/4_attack/fin_slap/4.png',
+        'img/1_sharkie/4_attack/fin_slap/5.png',
+        'img/1_sharkie/4_attack/fin_slap/6.png',
+        'img/1_sharkie/4_attack/fin_slap/7.png',
+        'img/1_sharkie/4_attack/fin_slap/8.png',
+    ];
     world;
     speed = 3;
     posY = 75;
@@ -87,6 +97,7 @@ class Character extends MovableObject {
         right: -100,
         bottom: -150
     };
+    lastAttack = 0;
 
 
     constructor() {
@@ -98,11 +109,13 @@ class Character extends MovableObject {
         this.loadImages(this.imagesSleep);
         this.loadImages(this.imagesShocked);
         this.loadImages(this.imagesElectrocuted);
+        this.loadImages(this.imagesFinslap);
         this.applyGravity();
         this.animate();
         this.move();
         this.swimmingSound = new Audio('audio/swimming.mp3');
         this.swimmingSound.volume = 0.05;
+        this.attack();
     }
 
 
@@ -114,6 +127,7 @@ class Character extends MovableObject {
             }
             else if (this.isShocked()) { this.playAnimation(this.imagesShocked); }
             else if (this.isHurt()) { this.playAnimation(this.imagesHurt); }
+            else if (this.isAttacking()) { this.playAnimation(this.imagesFinslap) }
             else if (this.world.keyboard.rightKey || this.world.keyboard.leftKey || this.isAboveGround()) { this.playAnimation(this.imagesSwim); }
             else if (this.isSleeping()) { this.playAnimation(this.imagesSleep); }
             else { this.playAnimation(this.imagesIdle); }
@@ -143,6 +157,41 @@ class Character extends MovableObject {
             }
             this.world.cameraX = -this.posX + 25;
         }, 1000 / 60);
+    }
+
+
+    finslapAttack() {
+        if (this.lastMove.direction == 'left') { this.offset.left += 50 }
+        else { this.offset.right += 50 }
+        this.delay(500);
+        this.offset.left = -60;
+        this.offset.right = -100;
+    }
+
+
+    bubbleAttack() {
+        let bubble = new ThrowableObject(this.posX, this.posY, this.lastMove.direction);
+        this.world.throwableObjects.push(bubble);
+    }
+
+
+    poisonBubbleAttack() {
+        console.log('Here could be an attack using a poison bubble.')
+    }
+
+
+    attack() {
+        setInterval(() => {
+            if (this.world.keyboard.spaceKey && (new Date().getTime() - this.lastAttack > 1500)) {
+                this.lastMove.time = new Date().getTime();
+                this.lastAttack = new Date().getTime();
+                if (this.world.coinBar.percentage <= 0) {
+                    if (this.world.poisonBar.percentage <= 0) { this.poisonBubbleAttack(); }
+                    else { this.bubbleAttack() };
+                }
+                else { this.finslapAttack() };
+            };
+        }, 1000 / 10);
     }
 
 

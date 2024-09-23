@@ -43,7 +43,7 @@ class Jellyfish extends MovableObject {
         const color = Math.round(Math.random());
         this.loadImages(this.imagesSwim[color]);
         this.loadImages(this.imagesDead[color]);
-        this.posX = levelEndX * (0.4 + 0.2 * Math.random());
+        this.posX = levelEndX * (0.5 + 0.2 * Math.random());
         this.speed = 0.5 + Math.random() * 0.1;
         this.animate(color);
     }

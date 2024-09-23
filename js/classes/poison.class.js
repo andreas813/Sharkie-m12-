@@ -24,7 +24,7 @@ class Poison extends MovableObject {
     constructor() {
         super().loadImage('img/4_marcadores/posion/animada/1.png');
         this.loadImages(this.images);
-        this.posX = (levelEndX / 8) * (Poison.poisonAmount + 1) - 150;
+        this.posX = (levelEndX / 16) * (Poison.poisonAmount + 9) - 150;
         this.posY += Math.random() * 180;
         Poison.poisonAmount++;
         this.animate();

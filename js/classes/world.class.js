@@ -9,7 +9,6 @@ class World {
     poisonBar = new PoisonBar();
     coinBar = new CoinBar();
     throwableObjects = [new ThrowableObject()];
-    lastShot = 0;
 
 
     constructor(canvas) {
@@ -29,7 +28,6 @@ class World {
         setInterval(() => {
             if (!world.character.isDead()) {
                 this.checkCollisions();
-                this.shootBubble();
             }
         }, 1000 / 10);
     }
@@ -47,7 +45,13 @@ class World {
             if (this.character.isColliding(enemy)) {
                 if (this.character.energy > 0) {
                     if (enemy instanceof JellyfishSuper) { this.character.damage('shock') }
-                    else { this.character.damage('normal'); }
+                    else {
+                        if (this.character.isAttacking && enemy instanceof Pufferfish) {
+                            delete enemy.posX;
+                            delete enemy.posY;
+                        }
+                        else { this.character.damage('normal'); };
+                    }
                 };
             };
         });
@@ -57,7 +61,8 @@ class World {
     checkCollisionCoin() {
         this.level.collectables.forEach(collectable => {
             if (this.character.isColliding(collectable)) {
-                this.character.pickup('coin');
+                if (collectable instanceof Coin) { this.character.pickup('coin'); }
+                else { this.character.pickup('poison') };
                 delete collectable.posX;
                 delete collectable.posY;
 
@@ -76,15 +81,6 @@ class World {
                 };
             });
         });
-    }
-
-
-    shootBubble() {
-        if (this.keyboard.spaceKey && (new Date().getTime() - this.lastShot > 1500)) {
-            this.lastShot = new Date().getTime();
-            let bubble = new ThrowableObject(this.character.posX, this.character.posY, this.character.lastMove.direction);
-            this.throwableObjects.push(bubble);
-        }
     }
 
 

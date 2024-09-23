@@ -7,7 +7,7 @@ class Coin extends MovableObject {
 
     constructor() {
         super().loadImage('img/4_marcadores/1_coins/1.png');
-        this.posX = (levelEndX / 8) * (Coin.coinAmount + 1);
+        this.posX = (levelEndX / 16) * (Coin.coinAmount + 1);
         this.posY += Math.random() * 180;
         Coin.coinAmount++;
         this.animate();

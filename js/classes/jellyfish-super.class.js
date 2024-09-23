@@ -32,10 +32,10 @@ class JellyfishSuper extends MovableObject {
 
     ]
     offset = {
-        top: -15,
-        left: -15,
-        right: -30,
-        bottom: -40
+        top: -10,
+        left: -5,
+        right: -15,
+        bottom: -30
     };
 
 
@@ -44,7 +44,7 @@ class JellyfishSuper extends MovableObject {
         const color = Math.round(Math.random());
         this.loadImages(this.imagesSwim[color]);
         this.loadImages(this.imagesDead[color]);
-        this.posX = levelEndX * (0.6 + 0.2 * Math.random());
+        this.posX = levelEndX * (0.75 + 0.2 * Math.random());
         this.speed = 0.25 + Math.random() * 0.5;
         this.animate(color);
     }

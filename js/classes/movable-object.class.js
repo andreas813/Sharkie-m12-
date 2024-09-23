@@ -59,9 +59,6 @@ class MovableObject extends DrawableObject {
             (this.posX - this.offset.left) < (obj.posX - obj.offset.left) + (obj.width + obj.offset.right) &&
             (this.posY - this.offset.top) < (obj.posY - obj.offset.top) + (obj.height + obj.offset.bottom);
     }
-    // // Left from "Bessere Formel zur Kollisionsberechnung (Genauer)":
-    //     && obj.onCollisionCourse; 
-    //     // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
 
 
     damage(type) {
@@ -79,9 +76,9 @@ class MovableObject extends DrawableObject {
 
     pickup(type) {
         if (type == 'coin') {
-            let newPercentage = world.coinBar.percentage - 20;
-            world.coinBar.setPercentage(newPercentage);
+            world.coinBar.setPercentage(world.coinBar.percentage - 20);
         }
+        else { world.poisonBar.setPercentage(world.poisonBar.percentage - 20) };
     }
 
 
@@ -124,6 +121,14 @@ class MovableObject extends DrawableObject {
 
     isDead() {
         return this.energy < 1;
+    }
+
+
+    isAttacking() {
+        if ((new Date().getTime() - world.character.lastAttack) < 1500 &&
+            world.coinBar.percentage > 0 ) {
+            return true;
+        }
     }
 
 
