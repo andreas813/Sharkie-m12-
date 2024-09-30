@@ -9,7 +9,7 @@ class MovableObject extends DrawableObject {
 
 
     playAnimation(images) {
-        if ((this instanceof Character && (this.isDead() || this.lastDamage.shock > this.lastDamage.normal)) && this.currentImage >= images.length) {
+        if ((this instanceof Character && this.isDead()) && this.currentImage >= images.length) {
             this.currentImage = (images.length - 1);
         }
         else if (this.isSleeping() && this.currentImage >= images.length) {
@@ -126,7 +126,7 @@ class MovableObject extends DrawableObject {
 
     isAttacking() {
         if ((new Date().getTime() - world.character.lastAttack) < 1500 &&
-            world.coinBar.percentage > 0 ) {
+            world.coinBar.percentage > 0) {
             return true;
         }
     }
