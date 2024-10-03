@@ -138,19 +138,26 @@ class Character extends MovableObject {
     move() {
         setInterval(() => {
             if (!world.character.isDead()) {
-                if (this.world.keyboard.rightKey && this.posX < levelEndX) {
+                if (this.world.keyboard.rightKey &&
+                    this.posX < levelEndX &&
+                    !this.isAttacking()) {
                     this.moveRight();
                     this.otherDirection = false;
                     this.swimmingSound.play();
                     this.lastMove.direction = 'right';
                 }
-                if (this.world.keyboard.leftKey) {
+                if (this.world.keyboard.leftKey &&
+                    !this.isAttacking()
+                ) {
                     this.otherDirection = true;
                     this.swimmingSound.play();
                     this.lastMove.direction = 'left';
                     if (this.posX > 0) { this.moveLeft(); };
                 }
-                if (this.world.keyboard.upKey && !this.isAboveGround()) {
+                if (this.world.keyboard.upKey &&
+                    !this.isAboveGround() &&
+                    !this.isAttacking()
+                ) {
                     this.jump();
                     this.swimmingSound.play();
                 }
@@ -161,9 +168,9 @@ class Character extends MovableObject {
 
 
     finslapAttack() {
-        if (this.lastMove.direction == 'left') { this.offset.left += 50 }
-        else { this.offset.right += 50 }
-        this.delay(500);
+        if (this.lastMove.direction == 'left') { this.offset.left += 75 }
+        else { this.offset.right += 75 }
+        this.delay(750);
         this.offset.left = -60;
         this.offset.right = -100;
     }
@@ -182,7 +189,9 @@ class Character extends MovableObject {
 
     attack() {
         setInterval(() => {
-            if (this.world.keyboard.spaceKey && (new Date().getTime() - this.lastAttack > 1500)) {
+            if (this.world.keyboard.spaceKey &&
+                (new Date().getTime() - this.lastAttack > 1500) &&
+                !this.isHurt()) {
                 this.lastMove.time = new Date().getTime();
                 this.lastAttack = new Date().getTime();
                 if (this.world.coinBar.percentage <= 0) {

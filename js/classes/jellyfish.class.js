@@ -51,7 +51,7 @@ class Jellyfish extends MovableObject {
 
     animate(color) {
         setInterval(() => {
-            if (this.energy < 1) {
+            if (this.isDead()) {
                 this.playAnimation(this.imagesDead[color]);
                 setTimeout(() => { this.removeObject(this); }, 2000);
             }

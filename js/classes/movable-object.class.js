@@ -62,7 +62,8 @@ class MovableObject extends DrawableObject {
 
 
     damage(type) {
-        if (new Date().getTime() - this.lastDamage[type] > 2000) {
+        if ((new Date().getTime() - this.lastDamage[type]) > 2000 &&
+            !this.isAttacking()) {
             this.energy -= 20;
             let newPercentage = world.healthBar.percentage - 20;
             world.healthBar.setPercentage(newPercentage);
@@ -125,11 +126,10 @@ class MovableObject extends DrawableObject {
 
 
     isAttacking() {
-        if ((new Date().getTime() - world.character.lastAttack) < 1500 &&
-            world.coinBar.percentage > 0) {
-            return true;
-        }
+        return (new Date().getTime() - this.lastAttack) < 750 &&
+            world.coinBar.percentage > 0
     }
+
 
 
 }

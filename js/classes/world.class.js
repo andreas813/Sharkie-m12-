@@ -46,9 +46,8 @@ class World {
                 if (this.character.energy > 0) {
                     if (enemy instanceof JellyfishSuper) { this.character.damage('shock') }
                     else {
-                        if (this.character.isAttacking && enemy instanceof Pufferfish) {
-                            delete enemy.posX;
-                            delete enemy.posY;
+                        if (this.character.isAttacking() && enemy instanceof Pufferfish) {
+                            enemy.energy = 0;
                         }
                         else { this.character.damage('normal'); };
                     }
