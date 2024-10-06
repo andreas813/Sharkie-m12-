@@ -6,6 +6,9 @@ class MovableObject extends DrawableObject {
     energy = 100;
     lastDamage = { "normal": 0, "shock": 0 };
     lastMove = { "time": new Date().getTime(), "direction": "" };
+    pickupSound = new Audio('audio/pickup.mp3');
+    damageSound = new Audio('audio/damage.mp3');
+    shockSound = new Audio('audio/shock.mp3');
 
 
     playAnimation(images) {
@@ -69,7 +72,13 @@ class MovableObject extends DrawableObject {
             world.healthBar.setPercentage(newPercentage);
             this.lastMove.time = new Date().getTime();
             if (this.energy < 0) { this.energy = 0 }
-            else { this.lastDamage[type] = new Date().getTime(); };
+            else {
+                this.lastDamage[type] = new Date().getTime();
+                if (soundMuted == false) {
+                    this.damageSound.volume = 0.15;
+                    this.damageSound.play();
+                }
+            };
             if (type == 'shock') { this.shockDamage(); };
         }
     }
@@ -80,6 +89,10 @@ class MovableObject extends DrawableObject {
             world.coinBar.setPercentage(world.coinBar.percentage - 20);
         }
         else { world.poisonBar.setPercentage(world.poisonBar.percentage - 20) };
+        if (soundMuted == false) {
+            this.pickupSound.volume = 0.15;
+            this.pickupSound.play();
+        };
     }
 
 
@@ -96,6 +109,10 @@ class MovableObject extends DrawableObject {
                 this.moveRight();
                 await this.delay(25);
             };
+        };
+        if (soundMuted == false) {
+            this.shockSound.volume = 0.15;
+            this.shockSound.play();
         }
     }
 

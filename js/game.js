@@ -1,4 +1,5 @@
 let keyboard = new Keyboard;
+let soundMuted = false;
 
 
 function init() {
@@ -15,6 +16,29 @@ function openFullscreen() {
     if (game.requestFullscreen) { game.requestFullscreen(); }
     else if (game.webkitRequestFullscreen) { game.webkitRequestFullscreen(); }
     else if (game.msRequestFullscreen) { game.msRequestFullscreen(); };
+}
+
+
+function toggleSound() {
+    const sound = document.getElementById('sound');
+    if (soundMuted == false) { muteSound(sound); }
+    else { unmuteSound(sound); };
+}
+
+
+function muteSound(sound) {
+    soundMuted = true;
+    world.backgroundMusic.muted = true;
+    sound.classList.remove('bi-volume-up');
+    sound.classList.add('bi-volume-mute');
+}
+
+
+function unmuteSound(sound) {
+    soundMuted = false;
+    world.backgroundMusic.muted = false;
+    sound.classList.add('bi-volume-up');
+    sound.classList.remove('bi-volume-mute');
 }
 
 

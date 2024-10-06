@@ -18,6 +18,10 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
+        this.backgroundMusic = new Audio('audio/background.mp3');
+        this.backgroundMusic.volume = 0.15;
+        this.backgroundMusic.loop = true;
+        this.backgroundMusic.play();
     }
 
 

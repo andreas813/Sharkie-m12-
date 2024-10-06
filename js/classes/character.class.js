@@ -98,6 +98,7 @@ class Character extends MovableObject {
         bottom: -150
     };
     lastAttack = 0;
+    swimmingSound = new Audio('audio/swimming.mp3');
 
 
     constructor() {
@@ -113,8 +114,6 @@ class Character extends MovableObject {
         this.applyGravity();
         this.animate();
         this.move();
-        this.swimmingSound = new Audio('audio/swimming.mp3');
-        this.swimmingSound.volume = 0.05;
         this.attack();
     }
 
@@ -143,14 +142,14 @@ class Character extends MovableObject {
                     !this.isAttacking()) {
                     this.moveRight();
                     this.otherDirection = false;
-                    this.swimmingSound.play();
+                    this.playSwimmingSound();
                     this.lastMove.direction = 'right';
                 }
                 if (this.world.keyboard.leftKey &&
                     !this.isAttacking()
                 ) {
                     this.otherDirection = true;
-                    this.swimmingSound.play();
+                    this.playSwimmingSound();
                     this.lastMove.direction = 'left';
                     if (this.posX > 0) { this.moveLeft(); };
                 }
@@ -159,11 +158,19 @@ class Character extends MovableObject {
                     !this.isAttacking()
                 ) {
                     this.jump();
-                    this.swimmingSound.play();
+                    this.playSwimmingSound();
                 }
             }
             this.world.cameraX = -this.posX + 25;
         }, 1000 / 60);
+    }
+
+
+    playSwimmingSound() {
+        if (soundMuted == false) {
+            this.swimmingSound.volume = 0.05;
+            this.swimmingSound.play();
+        }
     }
 
 
