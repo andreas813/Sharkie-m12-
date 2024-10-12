@@ -175,8 +175,8 @@ class Character extends MovableObject {
 
 
     finslapAttack() {
-        if (this.lastMove.direction == 'left') { this.offset.left += 75 }
-        else { this.offset.right += 75 }
+        if (this.lastMove.direction == 'left') { this.offset.left += 150 }
+        else { this.offset.right += 150 }
         this.delay(750);
         this.offset.left = -60;
         this.offset.right = -100;

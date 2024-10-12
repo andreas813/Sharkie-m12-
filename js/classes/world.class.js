@@ -41,6 +41,7 @@ class World {
         this.checkCollisionEnemy();
         this.checkCollisionCoin();
         this.checkCollisionBubble();
+        this.checkCollisionFinslapAttack();
     }
 
 
@@ -49,11 +50,21 @@ class World {
             if (this.character.isColliding(enemy)) {
                 if (this.character.energy > 0) {
                     if (enemy instanceof JellyfishSuper) { this.character.damage('shock') }
-                    else {
-                        if (this.character.isAttacking() && enemy instanceof Pufferfish) {
-                            enemy.energy = 0;
-                        }
-                        else { this.character.damage('normal'); };
+                    else { this.character.damage('normal'); }
+                };
+            };
+        });
+    }
+
+
+    checkCollisionFinslapAttack() {
+        this.level.enemies.forEach(enemy => {
+            if (enemy instanceof Pufferfish) {
+                if (this.character.posY >= 200) {
+                    if (enemy.posX - this.character.posX <= 200 &&
+                        this.character.posX - enemy.posX <= 100 &&
+                        this.character.isAttacking()) {
+                        setTimeout(() => { enemy.energy = 0; }, 500);
                     }
                 };
             };
@@ -68,7 +79,6 @@ class World {
                 else { this.character.pickup('poison') };
                 delete collectable.posX;
                 delete collectable.posY;
-
             };
         });
     }
@@ -91,12 +101,7 @@ class World {
         this.ctx.clearRect(0, 0, canvas.width, canvas.height)
         this.ctx.translate(this.cameraX, 0);
         this.addObjectsToMap(this.level.backgrounds);
-        this.ctx.translate(-this.cameraX, 0);
-        this.addToMap(this.healthBar);
-        this.addToMap(this.poisonBar);
-        this.addToMap(this.coinBar);
-        this.addObjectsToMap(this.level.lights);
-        this.ctx.translate(this.cameraX, 0);
+        this.drawFixed();
         this.addObjectsToMap(this.throwableObjects);
         this.addObjectsToMap(this.level.collectables);
         this.addObjectsToMap(this.level.enemies);
@@ -104,7 +109,17 @@ class World {
         this.ctx.translate(-this.cameraX, 0);
         self = this;
         requestAnimationFrame(function () { self.draw(); });
-    };
+    }
+
+
+    drawFixed() {
+        this.ctx.translate(-this.cameraX, 0);
+        this.addToMap(this.healthBar);
+        this.addToMap(this.poisonBar);
+        this.addToMap(this.coinBar);
+        this.addObjectsToMap(this.level.lights);
+        this.ctx.translate(this.cameraX, 0);
+    }
 
 
     addObjectsToMap(objects) {
@@ -117,7 +132,7 @@ class World {
         movObj.draw(this.ctx);
         movObj.drawFrame(this.ctx);
         if (movObj.otherDirection) { this.flipImageBack(movObj); }
-    };
+    }
 
 
     flipImage(movObj) {

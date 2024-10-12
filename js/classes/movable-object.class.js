@@ -77,7 +77,7 @@ class MovableObject extends DrawableObject {
                 if (soundMuted == false) {
                     this.damageSound.volume = 0.15;
                     this.damageSound.play();
-                }
+                };
             };
             if (type == 'shock') { this.shockDamage(); };
         }
@@ -113,7 +113,7 @@ class MovableObject extends DrawableObject {
         if (soundMuted == false) {
             this.shockSound.volume = 0.15;
             this.shockSound.play();
-        }
+        };
     }
 
 
@@ -133,7 +133,7 @@ class MovableObject extends DrawableObject {
         if (this instanceof Character) {
             let timepassed = new Date().getTime() - this.lastMove.time;
             return timepassed > 15000;
-        }
+        };
     }
 
 
@@ -144,7 +144,7 @@ class MovableObject extends DrawableObject {
 
     isAttacking() {
         return (new Date().getTime() - this.lastAttack) < 750 &&
-            world.coinBar.percentage > 0
+            world.coinBar.percentage > 0;
     }
 
 

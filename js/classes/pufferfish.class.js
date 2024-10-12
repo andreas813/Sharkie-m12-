@@ -115,13 +115,16 @@ class Pufferfish extends MovableObject {
         setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.imagesDead[color]);
-                // if (world.character.lastMove.direction == 'right') {this.moveRight()}
-                this.speedY = 5;
                 setTimeout(() => { this.removeObject(this); }, 2000);
             }
             else {
-                if (this.posX - world.character.posX < 360) { transition = true; };
-                if (bubbleswim >= this.imagesTransition.length) { this.playAnimation(this.imagesBubbleswim[color]); }
+                try { if (this.posX - world.character.posX < 360) { transition = true; }; }
+                catch (error) { };
+                if (bubbleswim >= this.imagesTransition.length) {
+                    this.playAnimation(this.imagesBubbleswim[color]);
+                    this.height = 100;
+                    this.width = 121;
+                }
                 else if (transition) {
                     this.playAnimation(this.imagesTransition[color]);
                     bubbleswim++
@@ -129,6 +132,13 @@ class Pufferfish extends MovableObject {
                 else { this.playAnimation(this.imagesSwim[color]); };
             };
         }, 1000 / 4);
-        setInterval(() => { this.moveLeft(); }, 1000 / 60);
+        setInterval(() => {
+            if (this.isDead()) {
+                if (world.character.lastMove.direction == 'right') { this.posX += 10; }
+                else { this.posX -= 10; }
+                this.posY -= 12.5;
+            }
+            else { this.moveLeft(); }
+        }, 1000 / 60);
     }
 }
