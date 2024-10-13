@@ -99,6 +99,8 @@ class Character extends MovableObject {
     };
     lastAttack = 0;
     swimmingSound = new Audio('audio/swimming.mp3');
+    lastSwimming = 0;
+    attackSound = new Audio('audio/finslapattack.mp3');
 
 
     constructor() {
@@ -167,30 +169,28 @@ class Character extends MovableObject {
 
 
     playSwimmingSound() {
-        if (soundMuted == false) {
+        if (!soundMuted && !this.isHurt() && (new Date().getTime() - this.lastSwimming > 750)) {
             this.swimmingSound.volume = 0.05;
             this.swimmingSound.play();
+            this.lastSwimming = new Date().getTime();
         }
     }
 
 
     finslapAttack() {
-        if (this.lastMove.direction == 'left') { this.offset.left += 150 }
-        else { this.offset.right += 150 }
-        this.delay(750);
+        if (this.lastMove.direction == 'left') { this.offset.left += 100 }
+        else { this.offset.right += 100 };
+        this.delay(500);
         this.offset.left = -60;
         this.offset.right = -100;
+        this.attackSound.volume = 0.2;
+        this.attackSound.play();
     }
 
 
-    bubbleAttack() {
-        let bubble = new ThrowableObject(this.posX, this.posY, this.lastMove.direction);
+    bubbleAttack(type) {
+        let bubble = new ThrowableObject(this.posX, this.posY, this.lastMove.direction, type);
         this.world.throwableObjects.push(bubble);
-    }
-
-
-    poisonBubbleAttack() {
-        console.log('Here could be an attack using a poison bubble.')
     }
 
 
@@ -202,8 +202,8 @@ class Character extends MovableObject {
                 this.lastMove.time = new Date().getTime();
                 this.lastAttack = new Date().getTime();
                 if (this.world.coinBar.percentage <= 0) {
-                    if (this.world.poisonBar.percentage <= 0) { this.poisonBubbleAttack(); }
-                    else { this.bubbleAttack() };
+                    if (this.world.poisonBar.percentage <= 0) { this.bubbleAttack('poison'); }
+                    else { this.bubbleAttack('normal') };
                 }
                 else { this.finslapAttack() };
             };

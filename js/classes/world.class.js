@@ -9,6 +9,7 @@ class World {
     poisonBar = new PoisonBar();
     coinBar = new CoinBar();
     throwableObjects = [new ThrowableObject()];
+    bubbleHitSound = new Audio('audio/bubblehit.mp3');
 
 
     constructor(canvas) {
@@ -88,12 +89,21 @@ class World {
         this.throwableObjects.forEach(throwable => {
             this.level.enemies.forEach(enemy => {
                 if (throwable.isColliding(enemy)) {
+                    this.playBubbleHitSound();
                     enemy.energy = 0;
                     delete throwable.posX;
                     delete throwable.posY;
                 };
             });
         });
+    }
+
+
+    playBubbleHitSound() {
+        if (!soundMuted) {
+            this.bubbleHitSound.volume = 0.15;
+            this.bubbleHitSound.play();
+        };
     }
 
 

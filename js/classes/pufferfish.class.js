@@ -94,6 +94,8 @@ class Pufferfish extends MovableObject {
         right: -15,
         bottom: -30
     };
+    pufferfishSound = new Audio('audio/pufferfish.mp3')
+    pufferfishSoundPlayed = false;
 
 
     constructor() {
@@ -122,6 +124,7 @@ class Pufferfish extends MovableObject {
                 catch (error) { };
                 if (bubbleswim >= this.imagesTransition.length) {
                     this.playAnimation(this.imagesBubbleswim[color]);
+                    this.playPufferfishSound();
                     this.height = 100;
                     this.width = 121;
                 }
@@ -141,4 +144,15 @@ class Pufferfish extends MovableObject {
             else { this.moveLeft(); }
         }, 1000 / 60);
     }
+
+
+    playPufferfishSound() {
+        if (!soundMuted && !this.pufferfishSoundPlayed) {
+            this.pufferfishSound.volume = 0.2;
+            this.pufferfishSound.play();
+            this.pufferfishSoundPlayed = true;
+        }
+    }
+
+
 }

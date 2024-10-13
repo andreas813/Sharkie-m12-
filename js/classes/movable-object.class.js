@@ -12,7 +12,7 @@ class MovableObject extends DrawableObject {
 
 
     playAnimation(images) {
-        if (this.isDead() && this.currentImage >= images.length) {
+        if (this.isDead() && !(this instanceof Jellyfish) && !(this instanceof JellyfishSuper) && this.currentImage >= images.length) {
             this.currentImage = (images.length - 1);
         }
         else if (this.isSleeping() && this.currentImage >= images.length) {
@@ -74,7 +74,7 @@ class MovableObject extends DrawableObject {
             if (this.energy < 0) { this.energy = 0 }
             else {
                 this.lastDamage[type] = new Date().getTime();
-                if (soundMuted == false) {
+                if (!soundMuted) {
                     this.damageSound.volume = 0.15;
                     this.damageSound.play();
                 };
@@ -89,7 +89,7 @@ class MovableObject extends DrawableObject {
             world.coinBar.setPercentage(world.coinBar.percentage - 20);
         }
         else { world.poisonBar.setPercentage(world.poisonBar.percentage - 20) };
-        if (soundMuted == false) {
+        if (!soundMuted) {
             this.pickupSound.volume = 0.15;
             this.pickupSound.play();
         };

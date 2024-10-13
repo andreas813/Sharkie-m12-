@@ -4,12 +4,17 @@ class StatusBar extends DrawableObject {
     posY = 30;
     height = 53;
     width = 200;
+    upgradeSound = new Audio('audio/upgrade.mp3');
 
 
     setPercentage(percentage) {
         this.percentage = percentage;
         let path = this.images[this.resolveImageIndex()];
         this.img = this.imageCache[path];
+        if (!soundMuted && percentage <= 0 && !(this instanceof HealthBar)) {
+            this.upgradeSound.volume = 0.2;
+            this.upgradeSound.play();
+        }
     }
 
 

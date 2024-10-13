@@ -60,10 +60,12 @@ class Endboss extends MovableObject {
     lastAttack = 0;
     timer;
     appeared = false;
+    appearanceSound = new Audio('audio/bossappearance.mp3');
+    attackSound = new Audio('audio/bossattack.mp3');
 
 
     constructor() {
-        super().loadImage('img/2_enemy/3_final_enemy/2_floating/1.png');
+        super().loadImage('img/2_enemy/3_final_enemy/1_introduce/1.png');
         this.loadImages(this.imagesFloating);
         this.loadImages(this.imagesAttack);
         this.loadImages(this.imagesDead);
@@ -84,12 +86,13 @@ class Endboss extends MovableObject {
             }
             else {
                 try {
-                    if ((this.posX - world.character.posX) <= 450 && !appearance) { appearance = true; };
+                    if ((this.posX - world.character.posX) <= 400 && !appearance) { appearance = true; };
                 }
                 catch (error) { };
                 if (appearance && !this.appeared) {
-                    this.posY = -25;
                     this.playAnimation(this.imagesIntroduce);
+                    this.posY = -25;
+                    this.playAppearanceSound();
                     setTimeout(() => {
                         this.appeared = true;
                         this.timer = new Date().getTime();
@@ -101,12 +104,21 @@ class Endboss extends MovableObject {
         }, 1000 / 6);
     }
 
+    playAppearanceSound() {
+        if (!soundMuted) {
+            this.appearanceSound.volume = 0.5;
+            this.appearanceSound.play();
+        }
+    }
+
 
     attack() {
         setInterval(() => {
             if (this.appeared && ((new Date().getTime() - this.timer) >= 4000)) {
                 this.lastAttack = new Date().getTime();
                 this.timer = new Date().getTime();
+                this.attackSound.volume = 0.25;
+                this.attackSound.play();
                 setTimeout(() => {
                     this.posX -= 100;
                     this.posY += 50;
@@ -115,7 +127,6 @@ class Endboss extends MovableObject {
                     this.posX += 100;
                     this.posY -= 50;
                 }, 750);
-
             };
         }, 1000 / 10);
 
