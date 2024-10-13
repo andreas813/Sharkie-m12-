@@ -54,7 +54,7 @@ class JellyfishSuper extends MovableObject {
         setInterval(() => {
             if (this.energy < 1) {
                 this.playAnimation(this.imagesDead[color]);
-                setTimeout(() => { this.removeObject(this); }, 2000);
+                setTimeout(() => { this.removeObject(this); }, 750);
             }
             else { this.playAnimation(this.imagesSwim[color]); };
         }, 1000 / 4);

@@ -1,5 +1,5 @@
 const layers = ['5_water', '4_fondo_2', '3_fondo_1', '2_floor'];
-const backgroundLength = 8;
+const backgroundLength = 4;
 const levelEndX = (backgroundLength - 2) * 720;
 
 

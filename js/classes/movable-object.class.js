@@ -12,7 +12,7 @@ class MovableObject extends DrawableObject {
 
 
     playAnimation(images) {
-        if ((this instanceof Character && this.isDead()) && this.currentImage >= images.length) {
+        if (this.isDead() && this.currentImage >= images.length) {
             this.currentImage = (images.length - 1);
         }
         else if (this.isSleeping() && this.currentImage >= images.length) {
@@ -137,16 +137,10 @@ class MovableObject extends DrawableObject {
     }
 
 
-    isDead() {
-        return this.energy < 1;
-    }
+    isDead() { return this.energy < 1; }
 
 
-    isAttacking() {
-        return (new Date().getTime() - this.lastAttack) < 750 &&
-            world.coinBar.percentage > 0;
-    }
-
+    isAttacking() { return (new Date().getTime() - this.lastAttack) < 750; }
 
 
 }

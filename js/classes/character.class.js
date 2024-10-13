@@ -126,7 +126,7 @@ class Character extends MovableObject {
             }
             else if (this.isShocked()) { this.playAnimation(this.imagesShocked); }
             else if (this.isHurt()) { this.playAnimation(this.imagesHurt); }
-            else if (this.isAttacking()) { this.playAnimation(this.imagesFinslap) }
+            else if (this.isAttacking() && world.coinBar.percentage > 0) { this.playAnimation(this.imagesFinslap) }
             else if (this.world.keyboard.rightKey || this.world.keyboard.leftKey || this.isAboveGround()) { this.playAnimation(this.imagesSwim); }
             else if (this.isSleeping()) { this.playAnimation(this.imagesSleep); }
             else { this.playAnimation(this.imagesIdle); }

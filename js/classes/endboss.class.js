@@ -53,11 +53,13 @@ class Endboss extends MovableObject {
     ]
     offset = {
         top: -200,
-        left: -50,
+        left: -25,
         right: -90,
         bottom: -275
     };
-
+    lastAttack = 0;
+    timer;
+    appeared = false;
 
 
     constructor() {
@@ -69,13 +71,12 @@ class Endboss extends MovableObject {
         this.loadImages(this.imagesIntroduce);
         this.posX = levelEndX * 0.9;
         this.animate();
+        this.attack();
     }
 
 
     animate() {
         let appearance = false;
-        let appeared = false;
-        let timer;
         setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.imagesDead);
@@ -83,25 +84,42 @@ class Endboss extends MovableObject {
             }
             else {
                 try {
-                    if ((this.posX - world.character.posX) <= 450 && !appearance) {
-                        appearance = true;
-                        timer = new Date().getTime();
-                    };
+                    if ((this.posX - world.character.posX) <= 450 && !appearance) { appearance = true; };
                 }
                 catch (error) { };
-                if (appearance && !appeared) {
+                if (appearance && !this.appeared) {
                     this.posY = -25;
                     this.playAnimation(this.imagesIntroduce);
-                    setTimeout(() => { appeared = true; }, 1000);
+                    setTimeout(() => {
+                        this.appeared = true;
+                        this.timer = new Date().getTime();
+                    }, 1000);
                 }
-                else if (appeared) {
-                    if (new Date().getTime() - timer >= 4000) {
-                        this.playAnimation(this.imagesAttack);
-                        timer = new Date().getTime();
-                    }
-                    else { this.playAnimation(this.imagesFloating); };
-                };
+                else if (this.isAttacking()) { this.playAnimation(this.imagesAttack); }
+                else { this.playAnimation(this.imagesFloating); };
             };
         }, 1000 / 6);
     }
+
+
+    attack() {
+        setInterval(() => {
+            if (this.appeared && ((new Date().getTime() - this.timer) >= 4000)) {
+                this.lastAttack = new Date().getTime();
+                this.timer = new Date().getTime();
+                setTimeout(() => {
+                    this.posX -= 100;
+                    this.posY += 50;
+                }, 250);
+                setTimeout(() => {
+                    this.posX += 100;
+                    this.posY -= 50;
+                }, 750);
+
+            };
+        }, 1000 / 10);
+
+    }
+
+
 }
