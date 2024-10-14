@@ -43,7 +43,6 @@ class Endboss extends MovableObject {
         'img/2_enemy/3_final_enemy/dead/mesa_de_trabajo_2_copia_8.png',
         'img/2_enemy/3_final_enemy/dead/mesa_de_trabajo_2_copia_9.png',
         'img/2_enemy/3_final_enemy/dead/mesa_de_trabajo_2_copia_10.png',
-        'img/2_enemy/3_final_enemy/dead/mesa_de_trabajo_2.png',
     ];
     imagesHurt = [
         'img/2_enemy/3_final_enemy/hurt/1.png',
@@ -62,6 +61,7 @@ class Endboss extends MovableObject {
     appeared = false;
     appearanceSound = new Audio('audio/bossappearance.mp3');
     attackSound = new Audio('audio/bossattack.mp3');
+    bossLastHurt = 0;
 
 
     constructor() {
@@ -82,12 +82,11 @@ class Endboss extends MovableObject {
         setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.imagesDead);
-                setTimeout(() => { this.removeObject(this); }, 1000);
+                setTimeout(() => { this.removeObject(this); }, 1500);
             }
+            else if (new Date().getTime() - this.bossLastHurt < 750) { this.playAnimation(this.imagesHurt); }
             else {
-                try {
-                    if ((this.posX - world.character.posX) <= 400 && !appearance) { appearance = true; };
-                }
+                try { if ((this.posX - world.character.posX) <= 400 && !appearance) { appearance = true; }; }
                 catch (error) { };
                 if (appearance && !this.appeared) {
                     this.playAnimation(this.imagesIntroduce);
@@ -99,11 +98,12 @@ class Endboss extends MovableObject {
                     }, 1000);
                 }
                 else if (this.isAttacking()) { this.playAnimation(this.imagesAttack); }
-                else { this.playAnimation(this.imagesFloating); };
+                else if (this.appeared) { this.playAnimation(this.imagesFloating); };
             };
         }, 1000 / 6);
     }
 
+    
     playAppearanceSound() {
         if (!soundMuted) {
             this.appearanceSound.volume = 0.5;

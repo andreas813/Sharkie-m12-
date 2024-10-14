@@ -5,10 +5,7 @@ class MovableObject extends DrawableObject {
     acceleration = 0.03;
     energy = 100;
     lastDamage = { "normal": 0, "shock": 0 };
-    lastMove = { "time": new Date().getTime(), "direction": "" };
-    pickupSound = new Audio('audio/pickup.mp3');
-    damageSound = new Audio('audio/damage.mp3');
-    shockSound = new Audio('audio/shock.mp3');
+    lastMove = { "time": this.getCurrentTime(), "direction": "" };
 
 
     playAnimation(images) {
@@ -27,13 +24,13 @@ class MovableObject extends DrawableObject {
 
     moveRight() {
         this.posX += this.speed;
-        this.lastMove.time = new Date().getTime();
+        this.lastMove.time = this.getCurrentTime();
     }
 
 
     moveLeft() {
         this.posX -= this.speed;
-        this.lastMove.time = new Date().getTime();
+        this.lastMove.time = this.getCurrentTime();
     }
 
 
@@ -52,7 +49,7 @@ class MovableObject extends DrawableObject {
 
     jump() {
         this.speedY = 3.25;
-        this.lastMove.time = new Date().getTime();
+        this.lastMove.time = this.getCurrentTime();
     }
 
 
@@ -65,22 +62,21 @@ class MovableObject extends DrawableObject {
 
 
     damage(type) {
-        if ((new Date().getTime() - this.lastDamage[type]) > 2000 &&
+        if ((this.getCurrentTime() - this.lastDamage[type]) > 2000 &&
             !this.isAttacking()) {
             this.energy -= 20;
             let newPercentage = world.healthBar.percentage - 20;
             world.healthBar.setPercentage(newPercentage);
-            this.lastMove.time = new Date().getTime();
+            this.lastMove.time = this.getCurrentTime();
             if (this.energy < 0) { this.energy = 0 }
             else {
-                this.lastDamage[type] = new Date().getTime();
-                if (!soundMuted) {
-                    this.damageSound.volume = 0.15;
-                    this.damageSound.play();
+                this.lastDamage[type] = this.getCurrentTime();
+                if (type == 'normal') {
+                    this.playSound('damage', 0.15);
                 };
             };
             if (type == 'shock') { this.shockDamage(); };
-        }
+        };
     }
 
 
@@ -89,15 +85,13 @@ class MovableObject extends DrawableObject {
             world.coinBar.setPercentage(world.coinBar.percentage - 20);
         }
         else { world.poisonBar.setPercentage(world.poisonBar.percentage - 20) };
-        if (!soundMuted) {
-            this.pickupSound.volume = 0.15;
-            this.pickupSound.play();
-        };
+        this.playSound('pickup', 0.15);
     }
 
 
     async shockDamage() {
         this.speedY = 1.5;
+        this.playSound('shock', 0.15);
         if (this.lastMove.direction == 'right') {
             for (let i = 0; i < 32; i++) {
                 this.moveLeft();
@@ -110,28 +104,24 @@ class MovableObject extends DrawableObject {
                 await this.delay(25);
             };
         };
-        if (soundMuted == false) {
-            this.shockSound.volume = 0.15;
-            this.shockSound.play();
-        };
     }
 
 
     isHurt() {
-        let timepassed = new Date().getTime() - this.lastDamage.normal;
+        let timepassed = this.getCurrentTime() - this.lastDamage.normal;
         return timepassed < 1500;
     }
 
 
     isShocked() {
-        let timepassed = new Date().getTime() - this.lastDamage.shock;
+        let timepassed = this.getCurrentTime() - this.lastDamage.shock;
         return timepassed < 1000;
     }
 
 
     isSleeping() {
         if (this instanceof Character) {
-            let timepassed = new Date().getTime() - this.lastMove.time;
+            let timepassed = this.getCurrentTime() - this.lastMove.time;
             return timepassed > 15000;
         };
     }
@@ -140,7 +130,21 @@ class MovableObject extends DrawableObject {
     isDead() { return this.energy < 1; }
 
 
-    isAttacking() { return (new Date().getTime() - this.lastAttack) < 750; }
+    isAttacking() { return (this.getCurrentTime() - this.lastAttack) < 750; }
+
+
+    playSound(sound, volume) {
+        if (!soundMuted) {
+            const mp3 = new Audio(`audio/${sound}.mp3`);
+            mp3.volume = volume;
+            mp3.play();
+        }
+    }
+
+
+    getCurrentTime() {
+        return new Date().getTime();
+    }
 
 
 }

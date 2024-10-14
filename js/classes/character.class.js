@@ -183,7 +183,7 @@ class Character extends MovableObject {
         this.delay(500);
         this.offset.left = -60;
         this.offset.right = -100;
-        this.attackSound.volume = 0.2;
+        this.attackSound.volume = 0.1;
         this.attackSound.play();
     }
 

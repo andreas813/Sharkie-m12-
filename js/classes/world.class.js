@@ -88,16 +88,25 @@ class World {
     checkCollisionBubble() {
         this.throwableObjects.forEach(throwable => {
             this.level.enemies.forEach(enemy => {
-                if (throwable.isColliding(enemy)) {
-                    this.playBubbleHitSound();
+                if (throwable.isColliding(enemy) && throwable.type == 'poison' && (enemy instanceof Endboss)) {
+                    enemy.energy -= 20;
+                    enemy.bossLastHurt = new Date().getTime();
+                    this.bubbleHit(throwable);
+                }
+                if (throwable.isColliding(enemy) && !(enemy instanceof Endboss)) {
                     enemy.energy = 0;
-                    delete throwable.posX;
-                    delete throwable.posY;
+                    this.bubbleHit(throwable);
                 };
             });
         });
     }
 
+
+    bubbleHit(throwable) {
+        this.playBubbleHitSound();
+        delete throwable.posX;
+        delete throwable.posY;
+    }
 
     playBubbleHitSound() {
         if (!soundMuted) {

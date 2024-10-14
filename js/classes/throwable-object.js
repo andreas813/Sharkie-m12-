@@ -1,8 +1,10 @@
 class ThrowableObject extends MovableObject {
     bubbleSound = new Audio('audio/bubble.mp3');
+    type;
 
     constructor(posX, posY, direction, type) {
         super();
+        this.type = type;
         if (type == 'normal') {
             this.loadImage('img/1_sharkie/4_attack/bubble_trap/bubble.png');
             this.width = 60;
