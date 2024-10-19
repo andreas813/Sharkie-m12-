@@ -125,6 +125,7 @@ class Character extends MovableObject {
             if (this.isDead()) {
                 if (this.lastDamage.shock > this.lastDamage.normal) { this.playAnimation(this.imagesElectrocuted) }
                 else { this.playAnimation(this.imagesDead); };
+                setTimeout(() => { initGameOver() }, 2500);
             }
             else if (this.isShocked()) { this.playAnimation(this.imagesShocked); }
             else if (this.isHurt()) { this.playAnimation(this.imagesHurt); }

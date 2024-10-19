@@ -12,6 +12,7 @@ class DrawableObject {
         right: 0,
         bottom: 0
     };
+    showHitboxes;
 
 
     loadImage(path) {
@@ -37,13 +38,15 @@ class DrawableObject {
 
     drawFrame(ctx) {
         if (
-            this instanceof Character ||
-            this instanceof Pufferfish ||
-            this instanceof Endboss ||
-            this instanceof Jellyfish ||
-            this instanceof JellyfishSuper ||
-            this instanceof Coin ||
-            this instanceof Poison
+            (
+                this instanceof Character ||
+                this instanceof Pufferfish ||
+                this instanceof Endboss ||
+                this instanceof Jellyfish ||
+                this instanceof JellyfishSuper ||
+                this instanceof Coin ||
+                this instanceof Poison
+            ) && this.showHitboxes
         ) {
             ctx.beginPath();
             ctx.lineWidth = '2';

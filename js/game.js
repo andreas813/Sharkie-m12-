@@ -4,11 +4,21 @@ let soundMuted = false;
 
 function init() {
     canvas = document.getElementById('canvas');
-    world = new World(canvas, keyboard);
     canvas.width = 720;
     canvas.height = 480;
 }
 
+
+function initGame() {
+    world = new World(canvas, keyboard);
+    document.getElementById('start').classList.add('d-none');
+    document.getElementById('tryAgain').classList.add('d-none');
+}
+
+
+function initGameOver() {
+    document.getElementById('tryAgain').classList.remove('d-none');
+}
 
 //* Fullscreen for the div containing the game is activated with alternative ways for Safari and Internet Explorer 11 */
 function openFullscreen() {

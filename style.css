@@ -69,6 +69,19 @@ h1.custom-font {
 }
 
 
+#controls {
+    width: 100%;
+    max-width: 720px;
+}
+
+
+#start,
+#tryAgain {
+    width: 50%;
+    cursor: pointer;
+}
+
+
 @media only screen and (max-width: 720px) {
     canvas {
         width: 100%;
