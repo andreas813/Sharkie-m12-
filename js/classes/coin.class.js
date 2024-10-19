@@ -14,6 +14,7 @@ class Coin extends MovableObject {
     }
 
 
+    /** This function animates coins by moving them up and down in a randomized interval. */
     animate() {
         let coinPosition = 'bottom';
         setInterval(() => {
@@ -27,4 +28,6 @@ class Coin extends MovableObject {
             };
         }, 1000 / (1 + Math.random() * 0.25));
     }
+
+
 }

@@ -11,4 +11,6 @@ class Level {
         this.backgrounds = backgrounds;
         this.collectables = collectables;
     }
+
+
 }

@@ -31,6 +31,7 @@ class Poison extends MovableObject {
     }
 
 
+    /** This function animates the poison pickup. */
     animate() {
         setInterval(() => {
             this.playAnimation(this.images);

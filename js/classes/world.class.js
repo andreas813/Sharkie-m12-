@@ -26,18 +26,19 @@ class World {
     }
 
 
+    /** This function sets the world reference for the character. */
     setWorld() { this.character.world = this; }
 
 
+    /** This functions starts all collision checks. */
     run() {
         setInterval(() => {
-            if (!world.character.isDead()) {
-                this.checkCollisions();
-            }
+            if (!world.character.isDead()) { this.checkCollisions(); };
         }, 1000 / 10);
     }
 
 
+    /** This functions invokes diffent types of collision checks. */
     checkCollisions() {
         this.checkCollisionEnemy();
         this.checkCollisionCoin();
@@ -46,6 +47,7 @@ class World {
     }
 
 
+    /** This function checks for collisions with all enemies. */
     checkCollisionEnemy() {
         this.level.enemies.forEach(enemy => {
             if (this.character.isColliding(enemy)) {
@@ -58,6 +60,7 @@ class World {
     }
 
 
+    /** This function checks if the finslap attacks hits an enemy. */
     checkCollisionFinslapAttack() {
         this.level.enemies.forEach(enemy => {
             if (enemy instanceof Pufferfish) {
@@ -66,13 +69,14 @@ class World {
                         this.character.posX - enemy.posX <= 100 &&
                         this.character.isAttacking()) {
                         setTimeout(() => { enemy.energy = 0; }, 500);
-                    }
+                    };
                 };
             };
         });
     }
 
 
+    /** This function checks if the character collides with one of the pickups. */
     checkCollisionCoin() {
         this.level.collectables.forEach(collectable => {
             if (this.character.isColliding(collectable)) {
@@ -85,6 +89,7 @@ class World {
     }
 
 
+    /** This functions checks if the bubble attack hits an enemy. */
     checkCollisionBubble() {
         this.throwableObjects.forEach(throwable => {
             this.level.enemies.forEach(enemy => {
@@ -92,7 +97,7 @@ class World {
                     enemy.energy -= 20;
                     enemy.bossLastHurt = new Date().getTime();
                     this.bubbleHit(throwable);
-                }
+                };
                 if (throwable.isColliding(enemy) && !(enemy instanceof Endboss)) {
                     enemy.energy = 0;
                     this.bubbleHit(throwable);
@@ -102,12 +107,15 @@ class World {
     }
 
 
+    /** This function removes a bubble and calls a sound function. */
     bubbleHit(throwable) {
         this.playBubbleHitSound();
         delete throwable.posX;
         delete throwable.posY;
     }
 
+
+    /** This function plays the bubble hit sound with a specific volume. */
     playBubbleHitSound() {
         if (!soundMuted) {
             this.bubbleHitSound.volume = 0.15;
@@ -116,6 +124,7 @@ class World {
     }
 
 
+    /** This function draws all movable the elements on the canvas, including background, enemies, and character. */
     draw() {
         this.ctx.clearRect(0, 0, canvas.width, canvas.height)
         this.ctx.translate(this.cameraX, 0);
@@ -131,6 +140,7 @@ class World {
     }
 
 
+    /** This function draws the fixed objects like health, poison, and coin bars. */
     drawFixed() {
         this.ctx.translate(-this.cameraX, 0);
         this.addToMap(this.healthBar);
@@ -141,19 +151,22 @@ class World {
     }
 
 
+    /** This function adds multiple objects in an array to the canvas for rendering. */
     addObjectsToMap(objects) {
         objects.forEach(object => { this.addToMap(object); });
     }
 
 
+    /** This function adds a single movable object to the canvas and handles its drawing and frame. */
     addToMap(movObj) {
-        if (movObj.otherDirection) { this.flipImage(movObj); }
+        if (movObj.otherDirection) { this.flipImage(movObj); };
         movObj.draw(this.ctx);
         movObj.drawFrame(this.ctx);
-        if (movObj.otherDirection) { this.flipImageBack(movObj); }
+        if (movObj.otherDirection) { this.flipImageBack(movObj); };
     }
 
 
+    /** This function flips the image horizontally for objects moving in the opposite direction. */
     flipImage(movObj) {
         this.ctx.save();
         this.ctx.translate(movObj.width, 0);
@@ -161,9 +174,11 @@ class World {
         movObj.posX *= -1;
     }
 
-
+    /** This function restores the original orientation of the flipped image. */
     flipImageBack(movObj) {
         movObj.posX *= -1;
         this.ctx.restore();
     }
+
+
 }

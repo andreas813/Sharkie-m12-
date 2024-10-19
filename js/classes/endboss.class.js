@@ -57,11 +57,12 @@ class Endboss extends MovableObject {
         bottom: -275
     };
     lastAttack = 0;
-    timer;
     appeared = false;
     appearanceSound = new Audio('audio/bossappearance.mp3');
     attackSound = new Audio('audio/bossattack.mp3');
     bossLastHurt = 0;
+    appearance = false;
+
 
 
     constructor() {
@@ -77,48 +78,42 @@ class Endboss extends MovableObject {
     }
 
 
+    /** This function animates the endboss depending on its current state. */
     animate() {
-        let appearance = false;
         setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.imagesDead);
                 setTimeout(() => { this.removeObject(this); }, 1500);
             }
-            else if (new Date().getTime() - this.bossLastHurt < 750) { this.playAnimation(this.imagesHurt); }
+            else if (this.getCurrentTime() - this.bossLastHurt < 750) { this.playAnimation(this.imagesHurt); }
             else {
-                try { if ((this.posX - world.character.posX) <= 400 && !appearance) { appearance = true; }; }
+                try { if ((this.posX - world.character.posX) <= 400 && !this.appearance) { this.appearance = true; }; }
                 catch (error) { };
-                if (appearance && !this.appeared) {
-                    this.playAnimation(this.imagesIntroduce);
-                    this.posY = -25;
-                    this.playAppearanceSound();
-                    setTimeout(() => {
-                        this.appeared = true;
-                        this.timer = new Date().getTime();
-                    }, 1000);
-                }
+                if (this.appearance && !this.appeared) { this.introduceBoss(); }
                 else if (this.isAttacking()) { this.playAnimation(this.imagesAttack); }
                 else if (this.appeared) { this.playAnimation(this.imagesFloating); };
             };
         }, 1000 / 6);
     }
 
-    
-    playAppearanceSound() {
-        if (!soundMuted) {
-            this.appearanceSound.volume = 0.5;
-            this.appearanceSound.play();
-        }
+
+    /** This function invokes different things to introduce the boss. */
+    introduceBoss() {
+        this.playAnimation(this.imagesIntroduce);
+        this.posY = -25;
+        this.playSound('bossappearance', 0.1);
+        setTimeout(() => {
+            this.appeared = true;
+        }, 1000);
     }
 
 
+    /** This function lets the boss attack after a specific amount of time has passed. */
     attack() {
         setInterval(() => {
-            if (this.appeared && ((new Date().getTime() - this.timer) >= 4000)) {
-                this.lastAttack = new Date().getTime();
-                this.timer = new Date().getTime();
-                this.attackSound.volume = 0.25;
-                this.attackSound.play();
+            if (this.appeared && ((this.getCurrentTime() - this.lastAttack) >= 4000)) {
+                this.lastAttack = this.getCurrentTime();
+                this.playSound('bossattack', 0.2);
                 setTimeout(() => {
                     this.posX -= 100;
                     this.posY += 50;
@@ -129,7 +124,6 @@ class Endboss extends MovableObject {
                 }, 750);
             };
         }, 1000 / 10);
-
     }
 
 

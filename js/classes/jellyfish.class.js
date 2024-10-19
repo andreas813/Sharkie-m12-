@@ -49,6 +49,7 @@ class Jellyfish extends MovableObject {
     }
 
 
+    /** This function plays animations based on the current state of the enemy. */
     animate(color) {
         setInterval(() => {
             if (this.isDead()) {
@@ -59,4 +60,6 @@ class Jellyfish extends MovableObject {
         }, 1000 / 4);
         setInterval(() => { this.moveLeft(); }, 1000 / 60);
     }
+
+
 }

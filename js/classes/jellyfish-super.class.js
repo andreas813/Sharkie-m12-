@@ -50,6 +50,7 @@ class JellyfishSuper extends MovableObject {
     }
 
 
+    /** This function plays animations based on the current state of the enemy. */
     animate(color) {
         setInterval(() => {
             if (this.energy < 1) {
@@ -58,8 +59,8 @@ class JellyfishSuper extends MovableObject {
             }
             else { this.playAnimation(this.imagesSwim[color]); };
         }, 1000 / 4);
-        setInterval(() => {
-            this.moveLeft();
-        }, 1000 / 60);
+        setInterval(() => { this.moveLeft(); }, 1000 / 60);
     }
+
+
 }

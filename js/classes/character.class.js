@@ -120,6 +120,7 @@ class Character extends MovableObject {
     }
 
 
+    /** This function play animations depending on the current state of the character. */
     animate() {
         setInterval(() => {
             if (this.isDead()) {
@@ -137,51 +138,28 @@ class Character extends MovableObject {
     }
 
 
+    /** This functions handles the movement of the character based on the keyboard inputs. */
     move() {
         setInterval(() => {
             if (!world.character.isDead()) {
                 if (this.world.keyboard.rightKey &&
                     this.posX < levelEndX &&
-                    !this.isAttacking()) {
-                    this.moveRight();
-                    this.otherDirection = false;
-                    this.playSwimmingSound();
-                    this.lastMove.direction = 'right';
-                }
-                if (this.world.keyboard.leftKey &&
-                    !this.isAttacking()
-                ) {
-                    this.otherDirection = true;
-                    this.playSwimmingSound();
-                    this.lastMove.direction = 'left';
-                    if (this.posX > 0) { this.moveLeft(); };
-                }
+                    !this.isAttacking()) { this.moveRight(); }
+                if (this.world.keyboard.leftKey && !this.isAttacking()) { if (this.posX > 0) { this.moveLeft(); }; }
                 if (this.world.keyboard.upKey &&
                     !this.isAboveGround() &&
                     !this.isAttacking()
-                ) {
-                    this.jump();
-                    this.playSwimmingSound();
-                }
+                ) { this.jump(); }
             }
             this.world.cameraX = -this.posX + 25;
         }, 1000 / 60);
     }
 
 
-    playSwimmingSound() {
-        if (!soundMuted && !this.isHurt() && (new Date().getTime() - this.lastSwimming > 750)) {
-            this.swimmingSound.volume = 0.05;
-            this.swimmingSound.play();
-            this.lastSwimming = new Date().getTime();
-        }
-    }
-
-
+    /** Performs a fin slap attack and plays the corresponding sound. */
     finslapAttack() {
         if (this.lastMove.direction == 'left') { this.offset.left += 100 }
         else { this.offset.right += 100 };
-        this.delay(500);
         this.offset.left = -60;
         this.offset.right = -100;
         this.attackSound.volume = 0.1;
@@ -189,12 +167,14 @@ class Character extends MovableObject {
     }
 
 
+    /** Launches a bubble attack depending on the type provided. */
     bubbleAttack(type) {
         let bubble = new ThrowableObject(this.posX, this.posY, this.lastMove.direction, type);
         this.world.throwableObjects.push(bubble);
     }
 
 
+    /** Detects the spacebar press to trigger either finslap or bubble attack. */
     attack() {
         setInterval(() => {
             if (this.world.keyboard.spaceKey &&

@@ -8,6 +8,7 @@ class MovableObject extends DrawableObject {
     lastMove = { "time": this.getCurrentTime(), "direction": "" };
 
 
+    /** This funcion plays general animations for various movable objects. */
     playAnimation(images) {
         if (this.isDead() && !(this instanceof Jellyfish) && !(this instanceof JellyfishSuper) && this.currentImage >= images.length) {
             this.currentImage = (images.length - 1);
@@ -22,18 +23,27 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /** This function is used to move the object to the right. */
     moveRight() {
         this.posX += this.speed;
         this.lastMove.time = this.getCurrentTime();
+        this.otherDirection = false;
+        this.playSwimmingSound();
+        this.lastMove.direction = 'right';
     }
 
 
+    /** This function is used to move the object to the left. */
     moveLeft() {
         this.posX -= this.speed;
         this.lastMove.time = this.getCurrentTime();
+        if (this instanceof Character) { this.otherDirection = true; };
+        this.playSwimmingSound();
+        this.lastMove.direction = 'left';
     }
 
 
+    /** This function simulates gravity by applying a downwards acceleration. */
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
@@ -44,15 +54,28 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /** This function returns if the object is currently not at the ground. */
     isAboveGround() { return this.posY < 260; }
 
 
+    /** This functions realizes a jump by applying an upwards speed. */
     jump() {
         this.speedY = 3.25;
         this.lastMove.time = this.getCurrentTime();
+        this.playSwimmingSound();
     }
 
 
+    /** This function plays the swimming sound if different requirements are met and a specific time has passed. */
+    playSwimmingSound() {
+        if (!soundMuted && !this.isHurt() && (this.getCurrentTime() - this.lastSwimming > 750)) {
+            this.playSound('swimming', 0.05);
+            this.lastSwimming = this.getCurrentTime();
+        };
+    }
+
+
+    /** This function compares the positions of two objects to check if they are colliding and returns it if so. */
     isColliding(obj) {
         return (this.posX - this.offset.left) + (this.width + this.offset.right) > obj.posX - obj.offset.left &&
             (this.posY - this.offset.top) + (this.height + this.offset.bottom) > obj.posY - obj.offset.top &&
@@ -61,6 +84,7 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /** This function applies damage to the object, takes care about related variables and plays a sound depending on the damage type. */
     damage(type) {
         if ((this.getCurrentTime() - this.lastDamage[type]) > 2000 &&
             !this.isAttacking()) {
@@ -71,24 +95,22 @@ class MovableObject extends DrawableObject {
             if (this.energy < 0) { this.energy = 0 }
             else {
                 this.lastDamage[type] = this.getCurrentTime();
-                if (type == 'normal') {
-                    this.playSound('damage', 0.15);
-                };
+                if (type == 'normal') { this.playSound('damage', 0.15); };
             };
             if (type == 'shock') { this.shockDamage(); };
         };
     }
 
 
+    /** This functions updates status bars depending on the pickup type and plays a sound. */
     pickup(type) {
-        if (type == 'coin') {
-            world.coinBar.setPercentage(world.coinBar.percentage - 20);
-        }
+        if (type == 'coin') { world.coinBar.setPercentage(world.coinBar.percentage - 20); }
         else { world.poisonBar.setPercentage(world.poisonBar.percentage - 20) };
         this.playSound('pickup', 0.15);
     }
 
 
+    /** This function moves the onjects in the oppsite direction and plays an extra sound to indicate the object has been shocked by electricity. */
     async shockDamage() {
         this.speedY = 1.5;
         this.playSound('shock', 0.15);
@@ -107,18 +129,21 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /** This returns if the object got hurt in a specific amount of time. */
     isHurt() {
         let timepassed = this.getCurrentTime() - this.lastDamage.normal;
         return timepassed < 1500;
     }
 
 
+    /** This returns if the object got shocked in a specific amount of time. */
     isShocked() {
         let timepassed = this.getCurrentTime() - this.lastDamage.shock;
         return timepassed < 1000;
     }
 
 
+    /** This returns if the object has not moved for a specific amount of time and is now sleeping. */
     isSleeping() {
         if (this instanceof Character) {
             let timepassed = this.getCurrentTime() - this.lastMove.time;
@@ -127,12 +152,15 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /** This returns if the energy of an object is below 1 and it is dead. */
     isDead() { return this.energy < 1; }
 
 
+    /** This returns if the object has attacked in a specific amount of time. */
     isAttacking() { return (this.getCurrentTime() - this.lastAttack) < 750; }
 
 
+    /** This function is used to play sounds and recieves the name of a sound and the desired playback volume. */
     playSound(sound, volume) {
         if (!soundMuted) {
             const mp3 = new Audio(`audio/${sound}.mp3`);
@@ -142,6 +170,7 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /** This function returns the current unix time. */
     getCurrentTime() {
         return new Date().getTime();
     }

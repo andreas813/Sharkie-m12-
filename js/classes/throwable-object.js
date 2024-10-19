@@ -24,21 +24,14 @@ class ThrowableObject extends MovableObject {
     }
 
 
+    /** This function determines the move direction of a shot bubble and plays the according sound. */
     shoot(direction) {
         if (direction === 'left') {
             this.posX -= 150;
             setInterval(() => { this.posX -= 2; }, 1000 / 60);
         }
         else { setInterval(() => { this.posX += 2; }, 1000 / 60); };
-        this.playBubbleSound();
-    }
-
-
-    playBubbleSound() {
-        if (!soundMuted) {
-            this.bubbleSound.volume = 0.1;
-            this.bubbleSound.play();
-        };
+        this.playSound('bubble', 0.1);
     }
 
 

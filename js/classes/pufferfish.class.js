@@ -111,47 +111,58 @@ class Pufferfish extends MovableObject {
     }
 
 
+    /** This function animates the enemy based on its current state. */
     animate(color) {
         let transition;
         let bubbleswim = 1;
         setInterval(() => {
-            if (this.isDead()) {
-                this.playAnimation(this.imagesDead[color]);
-                setTimeout(() => { this.removeObject(this); }, 2000);
+            try { if (this.posX - world.character.posX < 360) { transition = true; }; }
+            catch (error) { };
+            if (bubbleswim >= this.imagesTransition.length) { this.pufferfishBubble(color); }
+            else if (transition) {
+                this.playAnimation(this.imagesTransition[color]);
+                bubbleswim++
             }
-            else {
-                try { if (this.posX - world.character.posX < 360) { transition = true; }; }
-                catch (error) { };
-                if (bubbleswim >= this.imagesTransition.length) {
-                    this.playAnimation(this.imagesBubbleswim[color]);
-                    this.playPufferfishSound();
-                    this.height = 100;
-                    this.width = 121;
-                }
-                else if (transition) {
-                    this.playAnimation(this.imagesTransition[color]);
-                    bubbleswim++
-                }
-                else { this.playAnimation(this.imagesSwim[color]); };
-            };
+            else { this.playAnimation(this.imagesSwim[color]); };
         }, 1000 / 4);
-        setInterval(() => {
-            if (this.isDead()) {
-                if (world.character.lastMove.direction == 'right') { this.posX += 10; }
-                else { this.posX -= 10; }
-                this.posY -= 12.5;
-            }
-            else { this.moveLeft(); }
-        }, 1000 / 60);
+        this.movePufferfish(color);
     }
 
 
+    /** This function plays the pufferfish sound and sets a variable to true. */
     playPufferfishSound() {
-        if (!soundMuted && !this.pufferfishSoundPlayed) {
-            this.pufferfishSound.volume = 0.2;
-            this.pufferfishSound.play();
+        if (!this.pufferfishSoundPlayed) {
+            this.playSound('pufferfish', 0.2);
             this.pufferfishSoundPlayed = true;
-        }
+        };
+    }
+
+
+    /** This function accelerates the pufferfish in the opposite direction of the characters movement, plays its dying animation and removes it after a delay. */
+    killPufferfish(color) {
+        if (world.character.lastMove.direction == 'right') { this.posX += 10; }
+        else { this.posX -= 10; };
+        this.posY -= 12.5;
+        this.playAnimation(this.imagesDead[color]);
+        setTimeout(() => { this.removeObject(this); }, 2000);
+    }
+
+
+    /** This function plays an animation when the pufferfish gets in bubbleswim, a sound and adjusts the size.  */
+    pufferfishBubble(color) {
+        this.playAnimation(this.imagesBubbleswim[color]);
+        this.playPufferfishSound();
+        this.height = 100;
+        this.width = 121;
+    }
+
+
+    /** This functions lets the pufferfish move to the left while its not dead. */
+    movePufferfish(color) {
+        setInterval(() => {
+            if (this.isDead()) { this.killPufferfish(color); }
+            else { this.moveLeft(); };
+        }, 1000 / 60);
     }
 
 
