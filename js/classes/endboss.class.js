@@ -58,8 +58,6 @@ class Endboss extends MovableObject {
     };
     lastAttack = 0;
     appeared = false;
-    appearanceSound = new Audio('audio/bossappearance.mp3');
-    attackSound = new Audio('audio/bossattack.mp3');
     bossLastHurt = 0;
     appearance = false;
 
@@ -81,19 +79,27 @@ class Endboss extends MovableObject {
     /** This function animates the endboss depending on its current state. */
     animate() {
         setInterval(() => {
-            if (this.isDead()) {
-                this.playAnimation(this.imagesDead);
-                setTimeout(() => { this.removeObject(this); }, 1500);
-            }
+            if (this.isDead()) { this.animateDeath(); }
             else if (this.getCurrentTime() - this.bossLastHurt < 750) { this.playAnimation(this.imagesHurt); }
-            else {
-                try { if ((this.posX - world.character.posX) <= 400 && !this.appearance) { this.appearance = true; }; }
-                catch (error) { };
-                if (this.appearance && !this.appeared) { this.introduceBoss(); }
-                else if (this.isAttacking()) { this.playAnimation(this.imagesAttack); }
-                else if (this.appeared) { this.playAnimation(this.imagesFloating); };
-            };
+            else { this.animateAppearance(); };
         }, 1000 / 6);
+    }
+
+
+    /** This function handels the death animation after a specified delay. */
+    animateDeath() {
+        this.playAnimation(this.imagesDead);
+        setTimeout(() => { this.removeObject(this); }, 1500);
+    }
+
+
+    /** This function takes care about the appearance of the boss if it has not yet appeared. */
+    animateAppearance() {
+        try { if ((this.posX - world.character.posX) <= 400 && !this.appearance) { this.appearance = true; }; }
+        catch (error) { };
+        if (this.appearance && !this.appeared) { this.introduceBoss(); }
+        else if (this.isAttacking()) { this.playAnimation(this.imagesAttack); }
+        else if (this.appeared) { this.playAnimation(this.imagesFloating); };
     }
 
 
@@ -114,16 +120,19 @@ class Endboss extends MovableObject {
             if (this.appeared && ((this.getCurrentTime() - this.lastAttack) >= 4000)) {
                 this.lastAttack = this.getCurrentTime();
                 this.playSound('bossattack', 0.2);
-                setTimeout(() => {
-                    this.posX -= 100;
-                    this.posY += 50;
-                }, 250);
-                setTimeout(() => {
-                    this.posX += 100;
-                    this.posY -= 50;
-                }, 750);
+                this.changePosition(-100, 50, 250);
+                this.changePosition(100, -50, 750);
             };
         }, 1000 / 10);
+    }
+
+
+    /** Changes the bosses position with specified coordinates and a delay. */
+    changePosition(x, y, delay) {
+        setTimeout(() => {
+            this.posX += x;
+            this.posY += y;
+        }, delay);
     }
 
 

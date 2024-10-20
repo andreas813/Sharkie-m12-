@@ -98,9 +98,7 @@ class Character extends MovableObject {
         bottom: -150
     };
     lastAttack = 0;
-    swimmingSound = new Audio('audio/swimming.mp3');
     lastSwimming = 0;
-    attackSound = new Audio('audio/finslapattack.mp3');
 
 
     constructor() {
@@ -114,56 +112,59 @@ class Character extends MovableObject {
         this.loadImages(this.imagesElectrocuted);
         this.loadImages(this.imagesFinslap);
         this.applyGravity();
-        this.animate();
-        this.move();
-        this.attack();
+        this.startMainLoops();
+    }
+
+
+    /** Calls the animate, move and attack functions in a specified interval. */
+    startMainLoops() {
+        setInterval(() => {
+            this.move();
+            this.attack();
+        }, 1000 / 60);
+        setInterval(() => { this.animate(); }, 1000 / 8);
     }
 
 
     /** This function play animations depending on the current state of the character. */
     animate() {
-        setInterval(() => {
-            if (this.isDead()) {
-                if (this.lastDamage.shock > this.lastDamage.normal) { this.playAnimation(this.imagesElectrocuted) }
-                else { this.playAnimation(this.imagesDead); };
-                setTimeout(() => { initGameOver() }, 2500);
-            }
-            else if (this.isShocked()) { this.playAnimation(this.imagesShocked); }
-            else if (this.isHurt()) { this.playAnimation(this.imagesHurt); }
-            else if (this.isAttacking() && world.coinBar.percentage > 0) { this.playAnimation(this.imagesFinslap) }
-            else if (this.world.keyboard.rightKey || this.world.keyboard.leftKey || this.isAboveGround()) { this.playAnimation(this.imagesSwim); }
-            else if (this.isSleeping()) { this.playAnimation(this.imagesSleep); }
-            else { this.playAnimation(this.imagesIdle); }
-        }, 1000 / 8);
+        if (this.isDead()) { this.characterDying(); }
+        else if (this.isShocked()) { this.playAnimation(this.imagesShocked); }
+        else if (this.isHurt()) { this.playAnimation(this.imagesHurt); }
+        else if (this.isAttacking() && world.coinBar.percentage > 0) { this.playAnimation(this.imagesFinslap); }
+        else if (this.world.keyboard.rightKey || this.world.keyboard.leftKey || this.isAboveGround()) { this.playAnimation(this.imagesSwim); }
+        else if (this.isSleeping()) { this.playAnimation(this.imagesSleep); }
+        else { this.playAnimation(this.imagesIdle); }
+    }
+
+
+    /** This function handles the death of the character and calls game over after a delay. */
+    characterDying() {
+        if (this.lastDamage.shock > this.lastDamage.normal) { this.playAnimation(this.imagesElectrocuted); }
+        else { this.playAnimation(this.imagesDead); };
+        setTimeout(() => { initGameOver() }, 2500);
     }
 
 
     /** This functions handles the movement of the character based on the keyboard inputs. */
     move() {
-        setInterval(() => {
-            if (!world.character.isDead()) {
-                if (this.world.keyboard.rightKey &&
-                    this.posX < levelEndX &&
-                    !this.isAttacking()) { this.moveRight(); }
-                if (this.world.keyboard.leftKey && !this.isAttacking()) { if (this.posX > 0) { this.moveLeft(); }; }
-                if (this.world.keyboard.upKey &&
-                    !this.isAboveGround() &&
-                    !this.isAttacking()
-                ) { this.jump(); }
-            }
-            this.world.cameraX = -this.posX + 25;
-        }, 1000 / 60);
+        if (!world.character.isDead()) {
+            if (this.world.keyboard.rightKey && this.posX < levelEndX && !this.isAttacking()) { this.moveRight(); }
+            if (this.world.keyboard.leftKey && !this.isAttacking()) { if (this.posX > 0) { this.moveLeft(); }; }
+            if (this.world.keyboard.upKey && !this.isAboveGround() && !this.isAttacking()
+            ) { this.jump(); }
+        }
+        this.world.cameraX = -this.posX + 25;
     }
 
 
     /** Performs a fin slap attack and plays the corresponding sound. */
     finslapAttack() {
-        if (this.lastMove.direction == 'left') { this.offset.left += 100 }
+        if (this.lastMove.direction == 'left') { this.offset.left += 100; }
         else { this.offset.right += 100 };
         this.offset.left = -60;
         this.offset.right = -100;
-        this.attackSound.volume = 0.1;
-        this.attackSound.play();
+        this.playSound('finslapattack', 0.1);
     }
 
 
@@ -176,19 +177,15 @@ class Character extends MovableObject {
 
     /** Detects the spacebar press to trigger either finslap or bubble attack. */
     attack() {
-        setInterval(() => {
-            if (this.world.keyboard.spaceKey &&
-                (new Date().getTime() - this.lastAttack > 1500) &&
-                !this.isHurt()) {
-                this.lastMove.time = new Date().getTime();
-                this.lastAttack = new Date().getTime();
-                if (this.world.coinBar.percentage <= 0) {
-                    if (this.world.poisonBar.percentage <= 0) { this.bubbleAttack('poison'); }
-                    else { this.bubbleAttack('normal') };
-                }
-                else { this.finslapAttack() };
-            };
-        }, 1000 / 10);
+        if (this.world.keyboard.spaceKey && (new Date().getTime() - this.lastAttack > 1500) && !this.isHurt()) {
+            this.lastMove.time = new Date().getTime();
+            this.lastAttack = new Date().getTime();
+            if (this.world.coinBar.percentage <= 0) {
+                if (this.world.poisonBar.percentage <= 0) { this.bubbleAttack('poison'); }
+                else { this.bubbleAttack('normal'); };
+            }
+            else { this.finslapAttack(); };
+        };
     }
 
 

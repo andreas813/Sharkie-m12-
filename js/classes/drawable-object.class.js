@@ -41,9 +41,7 @@ class DrawableObject {
 
     /** This function draws frames around the character, enemies and pickups for visualizing the hitboxes. */
     drawFrame(ctx) {
-        if (
-            (this instanceof Character || this instanceof Pufferfish || this instanceof Endboss || this instanceof Jellyfish || this instanceof JellyfishSuper || this instanceof Coin || this instanceof Poison) && this.showHitboxes
-        ) {
+        if (this.drawFrameConditions()) {
             ctx.beginPath();
             ctx.lineWidth = '2';
             ctx.strokeStyle = 'red';
@@ -54,7 +52,13 @@ class DrawableObject {
                 this.height + this.offset.bottom
             );
             ctx.stroke();
-        }
+        };
+    }
+
+
+    /** This returns true if all requirements for showing the hitboxes are met. */
+    drawFrameConditions() {
+        return ((this instanceof Character || this instanceof Pufferfish || this instanceof Endboss || this instanceof Jellyfish || this instanceof JellyfishSuper || this instanceof Coin || this instanceof Poison) && this.showHitboxes);
     }
 
 
@@ -68,6 +72,8 @@ class DrawableObject {
     removeObject(obj) {
         delete obj.posX;
         delete obj.posY;
+        obj.height = 0;
+        obj.width = 0;
     }
 
 

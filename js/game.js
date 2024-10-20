@@ -18,6 +18,8 @@ function initGame() {
 
 function initGameOver() {
     document.getElementById('tryAgain').classList.remove('d-none');
+    soundMuted = true;
+    world.backgroundMusic.muted = true;
 }
 
 //* Fullscreen for the div containing the game is activated with alternative ways for Safari and Internet Explorer 11 */

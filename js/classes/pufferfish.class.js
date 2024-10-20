@@ -94,8 +94,8 @@ class Pufferfish extends MovableObject {
         right: -15,
         bottom: -30
     };
-    pufferfishSound = new Audio('audio/pufferfish.mp3')
     pufferfishSoundPlayed = false;
+    transition;
 
 
     constructor() {
@@ -113,19 +113,24 @@ class Pufferfish extends MovableObject {
 
     /** This function animates the enemy based on its current state. */
     animate(color) {
-        let transition;
         let bubbleswim = 1;
         setInterval(() => {
-            try { if (this.posX - world.character.posX < 360) { transition = true; }; }
-            catch (error) { };
+            this.enableTransition();
             if (bubbleswim >= this.imagesTransition.length) { this.pufferfishBubble(color); }
-            else if (transition) {
+            else if (this.transition) {
                 this.playAnimation(this.imagesTransition[color]);
                 bubbleswim++
             }
             else { this.playAnimation(this.imagesSwim[color]); };
         }, 1000 / 4);
         this.movePufferfish(color);
+    }
+
+
+    /** Sets the transition variable to true if possible. */
+    enableTransition() {
+        try { if (this.posX - world.character.posX < 360) { this.transition = true; }; }
+        catch (error) { };
     }
 
 

@@ -6,6 +6,7 @@ class MovableObject extends DrawableObject {
     energy = 100;
     lastDamage = { "normal": 0, "shock": 0 };
     lastMove = { "time": this.getCurrentTime(), "direction": "" };
+    damageValue = 20;
 
 
     /** This funcion plays general animations for various movable objects. */
@@ -88,9 +89,8 @@ class MovableObject extends DrawableObject {
     damage(type) {
         if ((this.getCurrentTime() - this.lastDamage[type]) > 2000 &&
             !this.isAttacking()) {
-            this.energy -= 20;
-            let newPercentage = world.healthBar.percentage - 20;
-            world.healthBar.setPercentage(newPercentage);
+            this.energy -= this.damageValue;
+            this.updateBar(world.healthBar, this.damageValue);
             this.lastMove.time = this.getCurrentTime();
             if (this.energy < 0) { this.energy = 0 }
             else {
@@ -102,11 +102,18 @@ class MovableObject extends DrawableObject {
     }
 
 
-    /** This functions updates status bars depending on the pickup type and plays a sound. */
+    /** This function updates status bars depending on the pickup type and plays a sound. */
     pickup(type) {
-        if (type == 'coin') { world.coinBar.setPercentage(world.coinBar.percentage - 20); }
-        else { world.poisonBar.setPercentage(world.poisonBar.percentage - 20) };
+        if (type == 'coin') { this.updateBar(world.coinBar, this.damageValue); }
+        else { this.updateBar(world.poisonBar, this.damageValue); };
         this.playSound('pickup', 0.15);
+    }
+
+
+    /** This function updates a given status bar by a give amount. */
+    updateBar(bar, amount) {
+        let newPercentage = bar.percentage - amount;
+        bar.setPercentage(newPercentage);
     }
 
 

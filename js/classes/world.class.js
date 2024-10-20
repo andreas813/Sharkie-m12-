@@ -19,6 +19,12 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
+        this.initializeAudio();
+    }
+
+
+    /** Loads the background music and plays it in loop at a specific volume. */
+    initializeAudio() {
         this.backgroundMusic = new Audio('audio/background.mp3');
         this.backgroundMusic.volume = 0.15;
         this.backgroundMusic.loop = true;
@@ -173,6 +179,7 @@ class World {
         this.ctx.scale(-1, 1);
         movObj.posX *= -1;
     }
+
 
     /** This function restores the original orientation of the flipped image. */
     flipImageBack(movObj) {
