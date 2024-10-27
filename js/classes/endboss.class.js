@@ -89,7 +89,10 @@ class Endboss extends MovableObject {
     /** This function handels the death animation after a specified delay. */
     animateDeath() {
         this.playAnimation(this.imagesDead);
-        setTimeout(() => { this.removeObject(this); }, 1500);
+        setTimeout(() => {
+            this.removeObject(this);
+            initGameWon();
+        }, 1500);
     }
 
 

@@ -16,6 +16,7 @@ const controlMapping = {
     'upButton': 'upKey',
     'spaceButton': 'spaceKey'
 };
+const victorySound = new Audio('audio/victory.mp3');
 
 
 /** This function initializes the canvas for the game. */
@@ -39,6 +40,18 @@ function initGame() {
 /** This function ends the game on the death of the character. */
 function initGameOver() {
     document.getElementById('tryAgain').classList.remove('d-none');
+    soundMuted = true;
+    world.backgroundMusic.muted = true;
+}
+
+
+/** This function ends the game on victory. */
+function initGameWon() {
+    if (!soundMuted) {
+        victorySound.volume = 0.5;
+        victorySound.play();
+    };
+    document.getElementById('victory').classList.remove('d-none');
     soundMuted = true;
     world.backgroundMusic.muted = true;
 }
