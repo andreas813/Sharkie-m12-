@@ -1,23 +1,22 @@
 class ThrowableObject extends MovableObject {
     bubbleSound = new Audio('audio/bubble.mp3');
     type;
+    width = 60;
+    height = 60;
+
 
     constructor(posX, posY, direction, type) {
         super();
         this.type = type;
         if (type == 'normal') {
             this.loadImage('img/1_sharkie/4_attack/bubble_trap/bubble.png');
-            this.width = 60;
-            this.height = 60;
             this.posY = posY + 95;
-
         }
         else {
             this.loadImage('img/1_sharkie/4_attack/bubble_trap/poisoned_bubble_for_whale.png');
             this.width = 90;
             this.height = 90;
             this.posY = posY + 80;
-
         };
         this.posX = posX + 150;
         this.shoot(direction);

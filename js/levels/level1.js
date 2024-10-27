@@ -3,6 +3,7 @@ const backgroundLength = 8;
 const levelEndX = (backgroundLength - 2) * 720;
 
 
+/** This function loads the backgrounds for the game according to the given backgroundLength variable. */
 function loadBackgrounds(layers) {
     const backgrounds = [];
     for (let i = -2; i < backgroundLength; i += 2) {

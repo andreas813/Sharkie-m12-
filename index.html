@@ -33,22 +33,50 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
-<body onload="init()" class="m-0 d-flex justify-content-center align-items-center">
+<body onload="init(); checkDevice();" class="m-0 d-flex justify-content-center align-items-center">
     <div class="d-flex flex-column align-items-center gap-2">
-        <div class="p-3 title">
+        <div id="title" class="p-3 title">
             <h1 class="m-0 custom-font">🦈 Sharky</h1>
+        </div>
+        <div id="rotateMessage" class="d-none">
+            <p>Please rotate your device to landscape mode.</p>
+            <i class="bi bi-arrow-counterclockwise"></i>
+            <i class="bi bi-tablet-landscape"></i>
         </div>
         <div class="game" id="game">
             <canvas id="canvas"></canvas>
-            <i id="fullscreen" class="icon-overlay bi bi-arrows-fullscreen position-absolute bottom-0 end-0 m-3" onclick="openFullscreen()"></i>
-            <i id="sound" class="icon-overlay bi bi-volume-up position-absolute top-0 end-0 m-3" onclick="toggleSound()"></i>
+            <div id="buttons" class="icon-overlay">
+                <div class="position-absolute top-0 end-0 p-3 d-flex gap-3">
+                    <i id="fullscreen" class="d-none bi bi-arrows-fullscreen" onclick="openFullscreen()"></i>
+                    <i id="sound" class="d-none bi bi-volume-up" onclick="toggleSound()"></i>
+                </div>
+                <div id="mobileButtons" class="">
+                    <div class="position-absolute bottom-0 start-0 d-flex gap-2 p-3">
+                        <div id="leftButton" class="p-2">
+                            <i class="bi bi-caret-left-square"></i>
+                        </div>
+                        <div id="rightButton" class="p-2">
+                            <i class="bi bi-caret-right-square"></i>
+                        </div>
+                    </div>
+                    <div class="position-absolute bottom-0 end-0 p-3 d-flex gap-2">
+                        <div id="upButton" class="p-2">
+                            <i class="bi bi-caret-up-square"></i>
+                        </div>
+                        <div id="spaceButton" class="p-2">
+                            <i class="bi bi-x-square"></i>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
             <img src="img/6_botones/start/2.png" alt="Start game" id="start" class="position-absolute top-50 start-50 translate-middle" onclick="initGame()">
             <a href="/index.html" id="tryAgain" class="d-none position-absolute top-50 start-50 translate-middle">
                 <img src="img/6_botones/tittles/game_over/recurso_12.png" alt="Game over" class="gameOverImg p-3">
                 <img src="img/6_botones/try_again/recurso_16.png" alt="Start game" class="gameOverImg">
             </a>
         </div>
-        <img id="controls" src="img/6_botones/instructions_2.png" alt="Sharky controls">
+        <img id="controls" src="img/6_botones/instructions_2.png" alt="Sharky controls" class="d-none">
     </div>
 </body>
 

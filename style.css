@@ -9,6 +9,7 @@
 html,
 body {
     height: 100%;
+    overflow: hidden;
 }
 
 
@@ -44,7 +45,7 @@ h1.custom-font {
 
 
 .icon-overlay {
-    font-size: 24px;
+    font-size: 32px;
     color: #fff;
     text-shadow:
         1px 1px 0 #000,
@@ -87,20 +88,53 @@ h1.custom-font {
 }
 
 
+#rotateMessage {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    font-size: 24px;
+    text-align: center;
+    padding-top: 40vh;
+    z-index: 10;
+}
+
+
+.active-touch {
+    filter: invert();
+}
+
+
 @media only screen and (max-width: 720px) {
     canvas {
         width: 100%;
     }
+
+
 }
 
 
-@media only screen and (max-height: 480px) {
-    h1 {
+@media only screen and (max-height: 590px) {
+    #title {
         display: none;
     }
 
 
+}
+
+@media only screen and (max-height: 480px) {
     canvas {
         height: 100vh;
     }
+
+
+    .game {
+        width: 100%;
+        height: 100vh;
+    }
+
+
 }
