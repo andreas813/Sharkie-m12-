@@ -21,9 +21,10 @@ const victorySound = new Audio('audio/victory.mp3');
 
 /** This function initializes the canvas for the game. */
 function init() {
-    canvas = document.getElementById('canvas');
+    const canvas = document.getElementById('canvas');
     canvas.width = 720;
     canvas.height = 480;
+    adjustCanvasSize();
 }
 
 
@@ -57,12 +58,63 @@ function initGameWon() {
 }
 
 
-/** This function activates the fullscreen for the canvas with alternative ways for Safari and Internet Explorer 11. */
-function openFullscreen() {
-    game = document.getElementById('canvas');
-    if (game.requestFullscreen) { game.requestFullscreen(); }
-    else if (game.webkitRequestFullscreen) { game.webkitRequestFullscreen(); }
-    else if (game.msRequestFullscreen) { game.msRequestFullscreen(); };
+/** This function switches fullscreen on and off.  */
+function toggleFullscreen() {
+    const game = document.getElementById('game');
+    if (!document.fullscreenElement) { enterFullscreen(game); }
+    else { exitFullscreen(); };
+    updateFullscreenIcon(!document.fullscreenElement);
+}
+
+
+/** This function applies the fullscreen depending on the browser type. */
+function enterFullscreen(game) {
+    if (game.requestFullscreen) {
+        game.requestFullscreen().then(() => adjustCanvasSize());
+    }
+    else if (game.webkitRequestFullscreen) {
+        game.webkitRequestFullscreen();
+        adjustCanvasSize();
+    }
+    else if (game.msRequestFullscreen) {
+        game.msRequestFullscreen();
+        adjustCanvasSize();
+    };
+}
+
+
+/** This function exits the fullscreen depending on the browser type. */
+function exitFullscreen() {
+    if (document.exitFullscreen) {
+        document.exitFullscreen().then(() => adjustCanvasSize());
+    }
+    else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+        adjustCanvasSize();
+    }
+    else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+        adjustCanvasSize();
+    };
+}
+
+
+/** This function updates the fullscreen icon depending on the current state. */
+function updateFullscreenIcon(isFullscreen) {
+    const fullscreenIcon = document.getElementById('fullscreen');
+    fullscreenIcon.classList.toggle('bi-arrows-fullscreen', !isFullscreen);
+    fullscreenIcon.classList.toggle('bi-fullscreen-exit', isFullscreen);
+}
+
+
+/** This function apllies changes to the canvas style depending on the fullscreen state. */
+function adjustCanvasSize() {
+    const canvas = document.getElementById('canvas');
+    if (document.fullscreenElement) {
+        canvas.style.height = '100vh';
+        canvas.style.maxHeight = '';
+    }
+    else { canvas.style.maxHeight = '480px'; }
 }
 
 
@@ -156,7 +208,6 @@ window.addEventListener('keyup', (event) => {
     if (event.key === 'ArrowLeft' || event.key === 'a' || event.key === 'A') keyboard.leftKey = false;
     if (event.key === ' ') keyboard.spaceKey = false;
 });
-
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('leftButton').addEventListener('touchstart', (e) => {
         e.preventDefault();
@@ -199,6 +250,10 @@ document.addEventListener("DOMContentLoaded", () => {
         e.target.classList.remove('active-touch');
     });
 });
-
 window.addEventListener('resize', checkDevice);
 window.addEventListener('orientationchange', checkDevice);
+window.addEventListener('resize', () => {
+    if (!document.fullscreenElement) {
+        adjustCanvasSize();
+    }
+});

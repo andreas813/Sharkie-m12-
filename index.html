@@ -46,12 +46,12 @@
         <div class="game" id="game">
             <canvas id="canvas"></canvas>
             <div id="buttons" class="icon-overlay">
-                <div class="position-absolute top-0 end-0 p-3 d-flex gap-3">
-                    <i id="fullscreen" class="d-none bi bi-arrows-fullscreen" onclick="openFullscreen()"></i>
+                <div class="position-absolute top-0 end-0 p-3 d-flex gap-4">
+                    <i id="fullscreen" class="d-none bi bi-arrows-fullscreen" onclick="toggleFullscreen()"></i>
                     <i id="sound" class="d-none bi bi-volume-up" onclick="toggleSound()"></i>
                 </div>
                 <div id="mobileButtons" class="">
-                    <div class="position-absolute bottom-0 start-0 d-flex gap-2 p-3">
+                    <div class="position-absolute bottom-0 start-0 d-flex gap-4 p-3">
                         <div id="leftButton" class="p-2">
                             <i class="bi bi-caret-left-square"></i>
                         </div>
@@ -59,7 +59,7 @@
                             <i class="bi bi-caret-right-square"></i>
                         </div>
                     </div>
-                    <div class="position-absolute bottom-0 end-0 p-3 d-flex gap-2">
+                    <div class="position-absolute bottom-0 end-0 p-3 d-flex gap-4">
                         <div id="upButton" class="p-2">
                             <i class="bi bi-caret-up-square"></i>
                         </div>
@@ -68,18 +68,17 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-            <img src="img/6_botones/start/2.png" alt="Start game" id="start" class="position-absolute top-50 start-50 translate-middle" onclick="initGame()">
-            <a href="/index.html" id="tryAgain" class="d-none position-absolute top-50 start-50 translate-middle">
+            <img src="./img/6_botones/start/2.png" alt="Start game" id="start" class="position-absolute top-50 start-50 translate-middle" onclick="initGame()">
+            <a href="./index.html" id="tryAgain" class="d-none position-absolute top-50 start-50 translate-middle">
                 <img src="img/6_botones/tittles/game_over/recurso_12.png" alt="Game over" class="gameOverImg p-3">
-                <img src="img/6_botones/try_again/recurso_16.png" alt="Start game" class="gameOverImg">
+                <img src="img/6_botones/try_again/recurso_16.png" alt="Restart" class="gameOverImg">
+            </a>
+            <a href="./index.html" id="victory" class="d-none">
+                <div id="gameWonBg" class="position-absolute top-50 start-50 translate-middle"></div>
+                <img src="img/6_botones/tittles/you_win/mesa_de_trabajo_1.png" alt="Game won" class="gameWonImg position-absolute top-50 start-50 translate-middle">
             </a>
         </div>
-        <a href="/index.html" id="victory" class="d-none">
-            <div id="gameWonBg" class="position-absolute top-50 start-50 translate-middle"></div>
-            <img src="img/6_botones/tittles/you_win/mesa_de_trabajo_1.png" alt="Game won" class="gameWonImg position-absolute top-50 start-50 translate-middle">
-        </a>
         <img id="controls" src="img/6_botones/instructions_2.png" alt="Sharky controls" class="d-none">
     </div>
 </body>
