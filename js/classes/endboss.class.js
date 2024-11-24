@@ -123,8 +123,8 @@ class Endboss extends MovableObject {
             if (this.appeared && ((this.getCurrentTime() - this.lastAttack) >= 4000)) {
                 this.lastAttack = this.getCurrentTime();
                 this.playSound('bossattack', 0.2);
-                this.changePosition(-100, 50, 250);
-                this.changePosition(100, -50, 750);
+                this.changePosition((Math.random() * -50 - 100), 50, 250);
+                this.changePosition(0, -50, 750);
             };
         }, 1000 / 10);
     }
