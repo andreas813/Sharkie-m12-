@@ -7,7 +7,9 @@ class StatusBar extends DrawableObject {
     upgradeSound = new Audio('audio/upgrade.mp3');
 
 
-    /** This function sets the percentage of a status bar to a given value. */
+    /** This function sets the percentage of a status bar to a given value. 
+    * @param {number} percentage - The new percentage value to set. The percentage typically ranges from `0` to `100`.
+    */
     setPercentage(percentage) {
         this.percentage = percentage;
         let path = this.images[this.resolveImageIndex()];

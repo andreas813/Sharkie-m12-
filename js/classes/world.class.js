@@ -113,7 +113,9 @@ class World {
     }
 
 
-    /** This function removes a bubble and calls a sound function. */
+    /** This function removes a bubble and calls a sound function. 
+    * @param {Object} throwable - The throwable object that was hit. This object should have `posX` and `posY` properties that will be deleted when the hit occurs.
+    */
     bubbleHit(throwable) {
         this.playBubbleHitSound();
         delete throwable.posX;
@@ -157,13 +159,17 @@ class World {
     }
 
 
-    /** This function adds multiple objects in an array to the canvas for rendering. */
+    /** This function adds multiple objects in an array to the canvas for rendering. 
+    * @param {Array<Object>} objects - An array of objects to be added to the map. Each object is passed to the `addToMap` method for addition.
+    */
     addObjectsToMap(objects) {
         objects.forEach(object => { this.addToMap(object); });
     }
 
 
-    /** This function adds a single movable object to the canvas and handles its drawing and frame. */
+    /** This function adds a single movable object to the canvas and handles its drawing and frame. 
+    * @param {Object} movObj - The movable object to be added to the map. This object must have the `draw` and `drawFrame` methods, and may optionally have an `otherDirection` property that determines whether the image should be flipped.
+    */
     addToMap(movObj) {
         if (movObj.otherDirection) { this.flipImage(movObj); };
         movObj.draw(this.ctx);
@@ -172,7 +178,9 @@ class World {
     }
 
 
-    /** This function flips the image horizontally for objects moving in the opposite direction. */
+    /** This function flips the image horizontally for objects moving in the opposite direction.
+    * @param {Object} movObj - The movable object whose image needs to be flipped. The object must have a `width` property for the scaling to work correctly and a `posX` property for adjusting its position.
+    */
     flipImage(movObj) {
         this.ctx.save();
         this.ctx.translate(movObj.width, 0);
@@ -181,7 +189,9 @@ class World {
     }
 
 
-    /** This function restores the original orientation of the flipped image. */
+    /** This function restores the original orientation of the flipped image. 
+    * @param {Object} movObj - The movable object whose image position needs to be restored. The object must have a `posX` property that will be inverted to reverse the horizontal flip.
+    */
     flipImageBack(movObj) {
         movObj.posX *= -1;
         this.ctx.restore();

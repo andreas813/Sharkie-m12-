@@ -67,7 +67,9 @@ function toggleFullscreen() {
 }
 
 
-/** This function applies the fullscreen depending on the browser type. */
+/** This function applies the fullscreen depending on the browser type. 
+* @param {HTMLElement} game - The game element to display in fullscreen mode.
+*/
 function enterFullscreen(game) {
     if (game.requestFullscreen) {
         game.requestFullscreen().then(() => adjustCanvasSize());
@@ -99,7 +101,9 @@ function exitFullscreen() {
 }
 
 
-/** This function updates the fullscreen icon depending on the current state. */
+/** This function updates the fullscreen icon depending on the current state. 
+* @param {boolean} isFullscreen - Indicates whether the application is in fullscreen mode.
+*/
 function updateFullscreenIcon(isFullscreen) {
     const fullscreenIcon = document.getElementById('fullscreen');
     fullscreenIcon.classList.toggle('bi-arrows-fullscreen', !isFullscreen);
@@ -126,7 +130,9 @@ function toggleSound() {
 }
 
 
-/** This function mutes the sound. */
+/** This function mutes the sound. 
+* @param {HTMLElement} sound - The sound icon element to update.
+*/
 function muteSound(sound) {
     soundMuted = true;
     world.backgroundMusic.muted = true;
@@ -135,7 +141,9 @@ function muteSound(sound) {
 }
 
 
-/** This function unmutes the sound. */
+/** This function unmutes the sound. 
+* @param {HTMLElement} sound - The sound icon element to update.
+*/
 function unmuteSound(sound) {
     soundMuted = false;
     world.backgroundMusic.muted = false;
@@ -187,7 +195,10 @@ function displayComputer() {
 }
 
 
-/** This function handles setting the key states and is called by the event listeners */
+/** This function handles setting the key states and is called by the event listeners 
+* @param {string} key - The key input to map to a control key.
+* @param {boolean} isPressed - Indicates whether the key is pressed (`true`) or released (`false`).
+*/
 function setKeyState(key, isPressed) {
     const controlKey = controlMapping[key];
     if (controlKey) keyboard[controlKey] = isPressed;

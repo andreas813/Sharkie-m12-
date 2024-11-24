@@ -168,7 +168,9 @@ class Character extends MovableObject {
     }
 
 
-    /** Launches a bubble attack depending on the type provided. */
+    /** Launches a bubble attack depending on the type provided. 
+    * @param {string} type - The type of bubble to be created, determining its behavior or properties.
+    */
     bubbleAttack(type) {
         let bubble = new ThrowableObject(this.posX, this.posY, this.lastMove.direction, type);
         this.world.throwableObjects.push(bubble);

@@ -130,7 +130,11 @@ class Endboss extends MovableObject {
     }
 
 
-    /** Changes the bosses position with specified coordinates and a delay. */
+    /** Changes the bosses position with specified coordinates and a delay. 
+    * @param {number} x - The amount to change the object's `posX` by.
+    * @param {number} y - The amount to change the object's `posY` by.
+    * @param {number} delay - The delay in milliseconds before the position is updated.
+    */
     changePosition(x, y, delay) {
         setTimeout(() => {
             this.posX += x;

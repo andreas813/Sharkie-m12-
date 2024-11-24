@@ -111,7 +111,9 @@ class Pufferfish extends MovableObject {
     }
 
 
-    /** This function animates the enemy based on its current state. */
+    /** This function animates the enemy based on its current state. 
+    * @param {string} color - The color used to select the corresponding animation frames from the `imagesSwim` and `imagesTransition` arrays.
+    */
     animate(color) {
         let bubbleswim = 1;
         setInterval(() => {
@@ -143,7 +145,9 @@ class Pufferfish extends MovableObject {
     }
 
 
-    /** This function accelerates the pufferfish in the opposite direction of the characters movement, plays its dying animation and removes it after a delay. */
+    /** This function accelerates the pufferfish in the opposite direction of the characters movement, plays its dying animation and removes it after a delay. 
+    * @param {string} color - The color used to select the appropriate death animation from the `imagesDead` array.
+    */
     killPufferfish(color) {
         if (world.character.lastMove.direction == 'right') { this.posX += 10; }
         else { this.posX -= 10; };
@@ -153,7 +157,9 @@ class Pufferfish extends MovableObject {
     }
 
 
-    /** This function plays an animation when the pufferfish gets in bubbleswim, a sound and adjusts the size.  */
+    /** This function plays an animation when the pufferfish gets in bubbleswim, a sound and adjusts the size.
+    * @param {string} color - The color used to select the appropriate bubble swimming animation from the `imagesBubbleswim` array.
+    */
     pufferfishBubble(color) {
         this.playAnimation(this.imagesBubbleswim[color]);
         this.playPufferfishSound();
@@ -162,7 +168,9 @@ class Pufferfish extends MovableObject {
     }
 
 
-    /** This functions lets the pufferfish move to the left while its not dead. */
+    /** This functions lets the pufferfish move to the left while its not dead. 
+    * @param {string} color - The color used to select the appropriate death animation from the `imagesDead` array when the pufferfish is dead.
+    */
     movePufferfish(color) {
         setInterval(() => {
             if (this.isDead()) { this.killPufferfish(color); }

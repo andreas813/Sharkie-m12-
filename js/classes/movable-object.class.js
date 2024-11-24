@@ -9,7 +9,9 @@ class MovableObject extends DrawableObject {
     damageValue = 20;
 
 
-    /** This funcion plays general animations for various movable objects. */
+    /** This funcion plays general animations for various movable objects. 
+    * @param {string} color - The color key used to select the appropriate animation frames from the `imagesDead` and `imagesSwim` properties.
+    */
     playAnimation(images) {
         if (this.isDead() && !(this instanceof Jellyfish) && !(this instanceof JellyfishSuper) && this.currentImage >= images.length) {
             this.currentImage = (images.length - 1);
@@ -76,7 +78,9 @@ class MovableObject extends DrawableObject {
     }
 
 
-    /** This function compares the positions of two objects to check if they are colliding and returns it if so. */
+    /** This function compares the positions of two objects to check if they are colliding and returns it if so. 
+    * @param {object} obj - The object to check for collision with. The object should have `posX`, `posY`, `width`, `height`, and `offset` properties.
+    */
     isColliding(obj) {
         return (this.posX - this.offset.left) + (this.width + this.offset.right) > obj.posX - obj.offset.left &&
             (this.posY - this.offset.top) + (this.height + this.offset.bottom) > obj.posY - obj.offset.top &&
@@ -85,7 +89,9 @@ class MovableObject extends DrawableObject {
     }
 
 
-    /** This function applies damage to the object, takes care about related variables and plays a sound depending on the damage type. */
+    /** This function applies damage to the object, takes care about related variables and plays a sound depending on the damage type. 
+    * @param {string} type - The type of damage to apply. Can be `'normal'` or `'shock'`.
+    */
     damage(type) {
         if ((this.getCurrentTime() - this.lastDamage[type]) > 2000 &&
             !this.isAttacking()) {
@@ -102,7 +108,9 @@ class MovableObject extends DrawableObject {
     }
 
 
-    /** This function updates status bars depending on the pickup type and plays a sound. */
+    /** This function updates status bars depending on the pickup type and plays a sound.
+    * @param {string} type - The type of item being picked up.
+    */
     pickup(type) {
         if (type == 'coin') { this.updateBar(world.coinBar, this.damageValue); }
         else { this.updateBar(world.poisonBar, this.damageValue); };
@@ -110,7 +118,10 @@ class MovableObject extends DrawableObject {
     }
 
 
-    /** This function updates a given status bar by a give amount. */
+    /** This function updates a given status bar by a give amount. 
+    * @param {object} bar - The bar object to update. This object should have a `percentage` property and a `setPercentage` method to update the bar's visual representation.
+    * @param {number} amount - The amount to decrease the bar's percentage by.
+    */
     updateBar(bar, amount) {
         let newPercentage = bar.percentage - amount;
         bar.setPercentage(newPercentage);
@@ -167,7 +178,10 @@ class MovableObject extends DrawableObject {
     isAttacking() { return (this.getCurrentTime() - this.lastAttack) < 750; }
 
 
-    /** This function is used to play sounds and recieves the name of a sound and the desired playback volume. */
+    /** This function is used to play sounds and recieves the name of a sound and the desired playback volume. 
+    * @param {string} sound - The name of the sound effect to play (without the file extension). The sound file is expected to be located in the `audio/` folder with the `.mp3` extension.
+    * @param {number} volume - The volume level at which to play the sound, ranging from `0` (mute) to `1` (full volume).
+    */
     playSound(sound, volume) {
         if (!soundMuted) {
             const mp3 = new Audio(`audio/${sound}.mp3`);

@@ -23,7 +23,9 @@ class ThrowableObject extends MovableObject {
     }
 
 
-    /** This function determines the move direction of a shot bubble and plays the according sound. */
+    /** This function determines the move direction of a shot bubble and plays the according sound. 
+    * @param {string} direction - The direction in which to shoot. Can be either `'left'` or `'right'`.
+    */
     shoot(direction) {
         if (direction === 'left') {
             this.posX -= 150;

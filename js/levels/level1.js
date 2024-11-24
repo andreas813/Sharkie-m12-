@@ -3,7 +3,9 @@ const backgroundLength = 8;
 const levelEndX = (backgroundLength - 2) * 720;
 
 
-/** This function loads the backgrounds for the game according to the given backgroundLength variable. */
+/** This function loads the backgrounds for the game according to the given backgroundLength variable. 
+* @param {string[]} layers - An array of layer names corresponding to subdirectories where background images are stored.
+*/
 function loadBackgrounds(layers) {
     const backgrounds = [];
     for (let i = -2; i < backgroundLength; i += 2) {

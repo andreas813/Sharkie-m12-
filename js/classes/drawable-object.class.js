@@ -15,20 +15,26 @@ class DrawableObject {
     showHitboxes;
 
 
-    /** This function creates an image object by a given path. */
+    /** This function creates an image object by a given path. 
+    * @param {string} path - The file path of the image to load.
+    */
     loadImage(path) {
         this.img = new Image();
         this.img.src = path;
     }
 
 
-    /** This function draws an image with given source, coordinates and sizes. */
+    /** This function draws an image with given source, coordinates and sizes. 
+    * @param {CanvasRenderingContext2D} ctx - The rendering context of the canvas where the object will be drawn.
+    */
     draw(ctx) {
         ctx.drawImage(this.img, this.posX, this.posY, this.width, this.height);
     }
 
 
-    /** This function iterates through an array containing multiple images and loads them. */
+    /** This function iterates through an array containing multiple images and loads them. 
+    *  @param {string[]} array - An array of image file paths to load and cache.
+    */
     loadImages(array) {
         array.forEach(
             path => {
@@ -39,7 +45,9 @@ class DrawableObject {
     }
 
 
-    /** This function draws frames around the character, enemies and pickups for visualizing the hitboxes. */
+    /** This function draws frames around the character, enemies and pickups for visualizing the hitboxes. 
+    * @param {CanvasRenderingContext2D} ctx - The rendering context of the canvas where the frame will be drawn.
+    */
     drawFrame(ctx) {
         if (this.drawFrameConditions()) {
             ctx.beginPath();
@@ -62,13 +70,17 @@ class DrawableObject {
     }
 
 
-    /** This function is used as a delay with a give amount of milliseconds in async for loops. */
+    /** This function is used as a delay with a give amount of milliseconds in async for loops. 
+    * @param {number} ms - The number of milliseconds to delay.
+    */
     delay(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
 
-    /** This function removes objects by deleting their properties. */
+    /** This function removes objects by deleting their properties. 
+    * @param {object} obj - The object to remove.
+    */
     removeObject(obj) {
         delete obj.posX;
         delete obj.posY;

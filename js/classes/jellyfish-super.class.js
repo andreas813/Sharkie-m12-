@@ -50,7 +50,9 @@ class JellyfishSuper extends MovableObject {
     }
 
 
-    /** This function plays animations based on the current state of the enemy. */
+    /** This function plays animations based on the current state of the enemy. 
+    * @param {string} color - The color key used to select the appropriate animation frames from `imagesDead` and `imagesSwim` properties.
+    */
     animate(color) {
         setInterval(() => {
             if (this.energy < 1) {
