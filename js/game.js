@@ -17,6 +17,8 @@ const controlMapping = {
     'spaceButton': 'spaceKey'
 };
 const victorySound = new Audio('audio/victory.mp3');
+let startScreenImage = new Image();
+startScreenImage.src = 'img/startscreen.jfif';
 
 
 /** This function initializes the canvas for the game. */
@@ -25,6 +27,7 @@ function init() {
     canvas.width = 720;
     canvas.height = 480;
     adjustCanvasSize();
+    drawStartScreen();
 }
 
 
@@ -202,6 +205,15 @@ function displayComputer() {
 function setKeyState(key, isPressed) {
     const controlKey = controlMapping[key];
     if (controlKey) keyboard[controlKey] = isPressed;
+}
+
+
+/** Draws the start screen on the canvas. */
+function drawStartScreen() {
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(startScreenImage, 0, 0, canvas.width, canvas.height);
 }
 
 
