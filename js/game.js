@@ -38,6 +38,7 @@ function initGame() {
     document.getElementById('tryAgain').classList.add('d-none');
     document.getElementById('fullscreen').classList.remove('d-none');
     document.getElementById('sound').classList.remove('d-none');
+    checkDevice();
 }
 
 
@@ -184,8 +185,10 @@ function checkOrientation() {
 function displayMobile() {
     const controls = document.getElementById('controls');
     const mobileButtons = document.getElementById('mobileButtons');
+    const fullscreenButton = document.getElementById('fullscreen');
     controls.classList.add('d-none');
     mobileButtons.classList.remove('d-none');
+    fullscreenButton.classList.add('d-none');
 }
 
 
@@ -193,8 +196,10 @@ function displayMobile() {
 function displayComputer() {
     const controls = document.getElementById('controls');
     const mobileButtons = document.getElementById('mobileButtons');
+    const fullscreenButton = document.getElementById('fullscreen');
     controls.classList.remove('d-none');
     mobileButtons.classList.add('d-none');
+    fullscreenButton.classList.remove('d-none');
 }
 
 
