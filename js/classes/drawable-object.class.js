@@ -12,7 +12,7 @@ class DrawableObject {
         right: 0,
         bottom: 0
     };
-    showHitboxes;
+    showHitboxes = true;
 
 
     /** This function creates an image object by a given path. 

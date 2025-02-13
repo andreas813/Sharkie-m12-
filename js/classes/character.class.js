@@ -160,10 +160,15 @@ class Character extends MovableObject {
 
     /** Performs a fin slap attack and plays the corresponding sound. */
     finslapAttack() {
-        if (this.lastMove.direction == 'left') { this.offset.left += 100; }
-        else { this.offset.right += 100 };
-        this.offset.left = -60;
-        this.offset.right = -100;
+        if (this.lastMove.direction == 'left') {
+            this.changePosition(-50, 0, 200);
+            this.changePosition(50, 0, 400);
+        }
+        else {
+            this.changePosition(50, 0, 200);
+            this.changePosition(-50, 0, 400);
+        };
+
         this.playSound('finslapattack', 0.1);
     }
 
@@ -191,4 +196,15 @@ class Character extends MovableObject {
     }
 
 
+    /** Changes the bosses position with specified coordinates and a delay. 
+    * @param {number} x - The amount to change the object's `posX` by.
+    * @param {number} y - The amount to change the object's `posY` by.
+    * @param {number} delay - The delay in milliseconds before the position is updated.
+    */
+    changePosition(x, y, delay) {
+        setTimeout(() => {
+            this.posX += x;
+            this.posY += y;
+        }, delay);
+    }
 }
