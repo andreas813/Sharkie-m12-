@@ -33,6 +33,7 @@ function init() {
 
 /** This function starts the game. */
 function initGame() {
+    initLevel();
     world = new World(canvas, keyboard);
     document.getElementById('start').classList.add('d-none');
     document.getElementById('tryAgain').classList.add('d-none');
