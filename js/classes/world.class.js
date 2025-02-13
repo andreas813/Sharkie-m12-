@@ -70,11 +70,11 @@ class World {
     checkCollisionFinslapAttack() {
         this.level.enemies.forEach(enemy => {
             if (enemy instanceof Pufferfish) {
-                if (this.character.posY >= 200) {
-                    if (enemy.posX - this.character.posX <= 200 &&
-                        this.character.posX - enemy.posX <= 100 &&
+                if (this.character.posY >= 220) {
+                    if (enemy.posX - this.character.posX <= 165 &&
+                        this.character.posX - enemy.posX <= 65 &&
                         this.character.isAttacking()) {
-                        setTimeout(() => { enemy.energy = 0; }, 500);
+                        setTimeout(() => { enemy.energy = 0; }, 100);
                     };
                 };
             };
