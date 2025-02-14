@@ -160,11 +160,9 @@ class Character extends MovableObject {
 
     /** Performs a fin slap attack and plays the corresponding sound. */
     finslapAttack() {
-        // if (this.lastMove.direction == 'left') { this.offset.left += 100; }
-        // else { this.offset.right += 100 };
-        // this.offset.left = -60;
-        // this.offset.right = -100;
-        this.playSound('finslapattack', 0.1);
+        setTimeout(() => {
+            this.playSound('finslapattack', 0.1);
+        }, 350);
     }
 
 
