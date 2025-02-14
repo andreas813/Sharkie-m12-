@@ -19,6 +19,19 @@ const controlMapping = {
 const victorySound = new Audio('audio/victory.mp3');
 let startScreenImage = new Image();
 startScreenImage.src = 'img/startscreen.jfif';
+const keyMappings = {
+    rightKey: ['ArrowRight', 'd', 'D'],
+    downKey: ['ArrowDown', 's', 'S'],
+    upKey: ['ArrowUp', 'w', 'W'],
+    leftKey: ['ArrowLeft', 'a', 'A'],
+    spaceKey: [' ']
+};
+const touchMappings = [
+    { id: 'leftButton', key: 'leftKey' },
+    { id: 'rightButton', key: 'rightKey' },
+    { id: 'upButton', key: 'upKey' },
+    { id: 'spaceButton', key: 'spaceKey' }
+];
 
 
 /** This function initializes the canvas for the game. */
@@ -223,66 +236,117 @@ function drawStartScreen() {
 }
 
 
-window.addEventListener('keydown', (event) => {
-    if (event.key === 'ArrowRight' || event.key === 'd' || event.key === 'D') keyboard.rightKey = true;
-    if (event.key === 'ArrowDown' || event.key === 's' || event.key === 'S') keyboard.downKey = true;
-    if (event.key === 'ArrowUp' || event.key === 'w' || event.key === 'W') keyboard.upKey = true;
-    if (event.key === 'ArrowLeft' || event.key === 'a' || event.key === 'A') keyboard.leftKey = true;
-    if (event.key === ' ') keyboard.spaceKey = true;
-});
-window.addEventListener('keyup', (event) => {
-    if (event.key === 'ArrowRight' || event.key === 'd' || event.key === 'D') keyboard.rightKey = false;
-    if (event.key === 'ArrowDown' || event.key === 's' || event.key === 'S') keyboard.downKey = false;
-    if (event.key === 'ArrowUp' || event.key === 'w' || event.key === 'W') keyboard.upKey = false;
-    if (event.key === 'ArrowLeft' || event.key === 'a' || event.key === 'A') keyboard.leftKey = false;
-    if (event.key === ' ') keyboard.spaceKey = false;
-});
-document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById('leftButton').addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        keyboard.leftKey = true;
-        e.target.classList.add('active-touch');
+// window.addEventListener('keydown', (event) => {
+//     if (event.key === 'ArrowRight' || event.key === 'd' || event.key === 'D') keyboard.rightKey = true;
+//     if (event.key === 'ArrowDown' || event.key === 's' || event.key === 'S') keyboard.downKey = true;
+//     if (event.key === 'ArrowUp' || event.key === 'w' || event.key === 'W') keyboard.upKey = true;
+//     if (event.key === 'ArrowLeft' || event.key === 'a' || event.key === 'A') keyboard.leftKey = true;
+//     if (event.key === ' ') keyboard.spaceKey = true;
+// });
+// window.addEventListener('keyup', (event) => {
+//     if (event.key === 'ArrowRight' || event.key === 'd' || event.key === 'D') keyboard.rightKey = false;
+//     if (event.key === 'ArrowDown' || event.key === 's' || event.key === 'S') keyboard.downKey = false;
+//     if (event.key === 'ArrowUp' || event.key === 'w' || event.key === 'W') keyboard.upKey = false;
+//     if (event.key === 'ArrowLeft' || event.key === 'a' || event.key === 'A') keyboard.leftKey = false;
+//     if (event.key === ' ') keyboard.spaceKey = false;
+// });
+// document.addEventListener("DOMContentLoaded", () => {
+//     document.getElementById('leftButton').addEventListener('touchstart', (e) => {
+//         e.preventDefault();
+//         keyboard.leftKey = true;
+//         e.target.classList.add('active-touch');
+//     });
+//     document.getElementById('leftButton').addEventListener('touchend', (e) => {
+//         e.preventDefault();
+//         keyboard.leftKey = false;
+//         e.target.classList.remove('active-touch');
+//     });
+//     document.getElementById('rightButton').addEventListener('touchstart', (e) => {
+//         e.preventDefault();
+//         keyboard.rightKey = true;
+//         e.target.classList.add('active-touch');
+//     });
+//     document.getElementById('rightButton').addEventListener('touchend', (e) => {
+//         e.preventDefault();
+//         keyboard.rightKey = false;
+//         e.target.classList.remove('active-touch');
+//     });
+//     document.getElementById('upButton').addEventListener('touchstart', (e) => {
+//         e.preventDefault();
+//         keyboard.upKey = true;
+//         e.target.classList.add('active-touch');
+//     });
+//     document.getElementById('upButton').addEventListener('touchend', (e) => {
+//         e.preventDefault();
+//         keyboard.upKey = false;
+//         e.target.classList.remove('active-touch');
+//     });
+//     document.getElementById('spaceButton').addEventListener('touchstart', (e) => {
+//         e.preventDefault();
+//         keyboard.spaceKey = true;
+//         e.target.classList.add('active-touch');
+//     });
+//     document.getElementById('spaceButton').addEventListener('touchend', (e) => {
+//         e.preventDefault();
+//         keyboard.spaceKey = false;
+//         e.target.classList.remove('active-touch');
+//     });
+// });
+// window.addEventListener('resize', checkDevice);
+// window.addEventListener('orientationchange', checkDevice);
+// window.addEventListener('resize', () => {
+//     if (!document.fullscreenElement) {
+//         adjustCanvasSize();
+//     }
+// });
+
+
+//** Hinzufügen von Event-Listenern für das Drücken und Loslassen von Tasten. */
+function addKeyEvents() {
+    window.addEventListener('keydown', (event) => {
+        for (const [keyProp, keys] of Object.entries(keyMappings)) {
+            if (keys.includes(event.key)) {
+                keyboard[keyProp] = true;
+            }
+        }
     });
-    document.getElementById('leftButton').addEventListener('touchend', (e) => {
-        e.preventDefault();
-        keyboard.leftKey = false;
-        e.target.classList.remove('active-touch');
+    window.addEventListener('keyup', (event) => {
+        for (const [keyProp, keys] of Object.entries(keyMappings)) {
+            if (keys.includes(event.key)) {
+                keyboard[keyProp] = false;
+            }
+        }
     });
-    document.getElementById('rightButton').addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        keyboard.rightKey = true;
-        e.target.classList.add('active-touch');
+}
+
+
+//** Zuweisung der Touch-Bedienung auf die üblichen Tasten */
+function addTouchEvents() {
+    touchMappings.forEach(mapping => {
+        const btn = document.getElementById(mapping.id);
+        if (btn) {
+            btn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                keyboard[mapping.key] = true;
+                btn.classList.add('active-touch');
+            });
+            btn.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                keyboard[mapping.key] = false;
+                btn.classList.remove('active-touch');
+            });
+        }
     });
-    document.getElementById('rightButton').addEventListener('touchend', (e) => {
-        e.preventDefault();
-        keyboard.rightKey = false;
-        e.target.classList.remove('active-touch');
+}
+
+
+//** Diese Funktion fügt beim HTML-onload Event-Listener für die Steuerung, Größenanpassung und Orientung des Spiels. */
+function initializeEventListeners() {
+    addKeyEvents();
+    addTouchEvents();
+    window.addEventListener('resize', () => {
+        checkDevice();
+        if (!document.fullscreenElement) { adjustCanvasSize(); }
     });
-    document.getElementById('upButton').addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        keyboard.upKey = true;
-        e.target.classList.add('active-touch');
-    });
-    document.getElementById('upButton').addEventListener('touchend', (e) => {
-        e.preventDefault();
-        keyboard.upKey = false;
-        e.target.classList.remove('active-touch');
-    });
-    document.getElementById('spaceButton').addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        keyboard.spaceKey = true;
-        e.target.classList.add('active-touch');
-    });
-    document.getElementById('spaceButton').addEventListener('touchend', (e) => {
-        e.preventDefault();
-        keyboard.spaceKey = false;
-        e.target.classList.remove('active-touch');
-    });
-});
-window.addEventListener('resize', checkDevice);
-window.addEventListener('orientationchange', checkDevice);
-window.addEventListener('resize', () => {
-    if (!document.fullscreenElement) {
-        adjustCanvasSize();
-    }
-});
+    window.addEventListener('orientationchange', checkDevice);
+}
