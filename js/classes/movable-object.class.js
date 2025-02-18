@@ -49,7 +49,7 @@ class MovableObject extends DrawableObject {
     /** This function simulates gravity by applying a downwards acceleration. */
     applyGravity() {
         setInterval(() => {
-            if (this.isAboveGround() || this.speedY > 0) {
+            if ((this.isAboveGround() || this.speedY > 0) && !this.isDead()) {
                 this.posY -= this.speedY;
                 this.speedY -= this.acceleration;
             }

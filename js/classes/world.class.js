@@ -137,11 +137,11 @@ class World {
         this.ctx.clearRect(0, 0, canvas.width, canvas.height)
         this.ctx.translate(this.cameraX, 0);
         this.addObjectsToMap(this.level.backgrounds);
-        this.drawFixed();
         this.addObjectsToMap(this.throwableObjects);
         this.addObjectsToMap(this.level.collectables);
         this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.character);
+        this.drawFixed();
         this.ctx.translate(-this.cameraX, 0);
         self = this;
         requestAnimationFrame(function () { self.draw(); });

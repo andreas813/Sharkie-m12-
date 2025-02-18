@@ -141,7 +141,12 @@ class Character extends MovableObject {
     /** This function handles the death of the character and calls game over after a delay. */
     characterDying() {
         if (this.lastDamage.shock > this.lastDamage.normal) { this.playAnimation(this.imagesElectrocuted); }
-        else { this.playAnimation(this.imagesDead); };
+        else {
+            this.playAnimation(this.imagesDead);
+            setTimeout(() => {
+                setInterval(() => { this.posY -= 0.05; }, 1000 / 30);
+            }, 500);
+        };
         setTimeout(() => { initGameOver() }, 2500);
     }
 

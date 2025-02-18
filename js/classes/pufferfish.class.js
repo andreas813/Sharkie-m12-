@@ -177,6 +177,4 @@ class Pufferfish extends MovableObject {
             else { this.moveLeft(); };
         }, 1000 / 60);
     }
-
-
 }
