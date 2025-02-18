@@ -285,3 +285,21 @@ function initializeEventListeners() {
     });
     window.addEventListener('orientationchange', checkDevice);
 }
+
+
+//** Fügt ein neues Intervall hinzu, um die höchste ID zu bestimmen und mithilfe dieser alle laufenden Intervalle zu beenden. */
+function stopAllIntervals() {
+    const highestId = setInterval(() => {}, 1000);
+    for (let i = 0; i <= highestId; i++) {
+        clearInterval(i);
+    }
+}
+
+
+//** Gibt das aktuelle world-Objekt zur Garbage Collection frei und initialisiert das Spiel von vorne. */
+function restartGame() {
+    world = null;
+    soundMuted = false;
+    stopAllIntervals();
+    initGame();
+}
