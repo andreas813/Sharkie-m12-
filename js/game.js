@@ -52,6 +52,7 @@ function initGame() {
     document.getElementById('tryAgain').classList.add('d-none');
     document.getElementById('fullscreen').classList.remove('d-none');
     document.getElementById('sound').classList.remove('d-none');
+    document.getElementById('victory').classList.add('d-none');
     checkDevice();
 }
 
@@ -302,4 +303,14 @@ function restartGame() {
     soundMuted = false;
     stopAllIntervals();
     initGame();
+}
+
+
+//** Bereitet die Oberfläche wieder so vor, dass das Menü angezeigt wird. */
+function showMenu() {
+    world = null;
+    soundMuted = false;
+    stopAllIntervals();
+    document.getElementById('start').classList.remove('d-none');
+    document.getElementById('victory').classList.add('d-none');
 }
