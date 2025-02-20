@@ -75,7 +75,7 @@ h1.custom-font {
 
 
 #controls {
-    width: 100%;
+    width: 80%;
     max-width: 720px;
 }
 
@@ -94,6 +94,7 @@ h1.custom-font {
 #tryAgain:hover {
     opacity: 1;
 }
+
 
 #restart {
     display: flex;

@@ -53,6 +53,7 @@ function initGame() {
     document.getElementById('fullscreen').classList.remove('d-none');
     document.getElementById('sound').classList.remove('d-none');
     document.getElementById('victory').classList.add('d-none');
+    document.getElementById('impress').classList.add('d-none');
     checkDevice();
 }
 
@@ -313,4 +314,5 @@ function showMenu() {
     stopAllIntervals();
     document.getElementById('start').classList.remove('d-none');
     document.getElementById('victory').classList.add('d-none');
+    document.getElementById('impress').classList.remove('d-none');
 }
