@@ -35,7 +35,7 @@
 
 <body onload="init(); checkDevice(); initializeEventListeners();" class="m-0 d-flex justify-content-center">
     <div class="d-flex flex-column align-items-center gap-2">
-        <div id="title" class="m-1 p-3 title">
+        <div id="title" class="m-3 p-3 title">
             <h1 class="m-0 custom-font">🦈 Sharky</h1>
         </div>
         <div id="rotateMessage" class="d-none">
@@ -75,7 +75,7 @@
                 <img src="img/6_botones/try_again/recurso_16.png" alt="Restart" class="gameOverImg">
             </div>
             <div id="victory" class="position-relative d-none">
-                <div id="gameWonBg" class="position-absolute top-50 start-50 translate-middle"> </div>
+                <div id="gameWonBg" class="position-fixed top-50 start-50 translate-middle"> </div>
                 <img src="img/6_botones/tittles/you_win/mesa_de_trabajo_1.png" alt="Game won" class="gameWonImg position-absolute top-50 start-50 translate-middle">
                 <div id="restart" class="">
                     <img src="img/6_botones/try_again/recurso_16.png" alt="Restart" class="gameRestartImg" onclick="restartGame();">
@@ -83,7 +83,7 @@
                 </div>
             </div>
         </div>
-        <img id="controls" src="img/6_botones/instructions_2.png" alt="Sharky controls" class="d-none">
+        <img id="controls" src="img/6_botones/instructions_2.png" alt="Sharky controls" class="d-none m-3">
         <div class="position-fixed bottom-0 end-0 p-2">
             <button class="btn btn-link text-decoration-none text-light" data-bs-toggle="modal" data-bs-target="#impressumModal" id="impress">
                 Impressum
