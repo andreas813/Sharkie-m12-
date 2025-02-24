@@ -1,5 +1,4 @@
 class ThrowableObject extends MovableObject {
-    bubbleSound = new Audio('audio/bubble.mp3');
     type;
     width = 60;
     height = 60;
@@ -32,7 +31,7 @@ class ThrowableObject extends MovableObject {
             setInterval(() => { this.posX -= 2; }, 1000 / 60);
         }
         else { setInterval(() => { this.posX += 2; }, 1000 / 60); };
-        this.playSound('bubble', 0.1);
+        // this.playSound('bubble', 0.1);
     }
 
 

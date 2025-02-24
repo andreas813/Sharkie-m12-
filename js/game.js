@@ -44,7 +44,7 @@ function init() {
 }
 
 
-/** This function starts the game. */
+/** This function starts the game by creating the world, hiding start menu items, showing the HUD elements. */
 function initGame() {
     initLevel();
     world = new World(canvas, keyboard);
@@ -55,6 +55,7 @@ function initGame() {
     document.getElementById('victory').classList.add('d-none');
     document.getElementById('impress').classList.add('d-none');
     checkDevice();
+    checkMute();
 }
 
 
@@ -147,6 +148,7 @@ function toggleSound() {
     const sound = document.getElementById('sound');
     if (soundMuted == false) { muteSound(sound); }
     else { unmuteSound(sound); };
+    localStorage.setItem('soundMuted', soundMuted);
 }
 
 
@@ -172,13 +174,22 @@ function unmuteSound(sound) {
 }
 
 
-/** This function checks if the the device is mobile and calls further functions depending on that. */
+/** Checks in the local storage if the game has been on mute before and initializes the game with muted sound if so. */
+function checkMute() {
+    const savedSoundState = localStorage.getItem('soundMuted');
+    if (savedSoundState == 'true') { toggleSound(); }
+}
+
+
+
+/** This function checks it's a mobile device by userAgent or if it uses a coarse pointer and calls further functions depending on that. */
 function checkDevice() {
-    if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+    const isCoarse = window.matchMedia("(pointer: coarse)").matches;
+    const isMobileUA = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    if (isCoarse || isMobileUA) {
         displayMobile();
         checkOrientation();
-    }
-    else { displayComputer(); }
+    } else { displayComputer(); }
 }
 
 
@@ -291,7 +302,7 @@ function initializeEventListeners() {
 
 //** Fügt ein neues Intervall hinzu, um die höchste ID zu bestimmen und mithilfe dieser alle laufenden Intervalle zu beenden. */
 function stopAllIntervals() {
-    const highestId = setInterval(() => {}, 1000);
+    const highestId = setInterval(() => { }, 1000);
     for (let i = 0; i <= highestId; i++) {
         clearInterval(i);
     }
