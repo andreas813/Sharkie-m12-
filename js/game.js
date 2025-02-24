@@ -216,6 +216,8 @@ function displayMobile() {
     controls.classList.add('d-none');
     mobileButtons.classList.remove('d-none');
     fullscreenButton.classList.add('d-none');
+    document.getElementById('impressDiv').classList.remove('bottom-0');
+    document.getElementById('impressDiv').classList.add('top-0');
 }
 
 
@@ -227,6 +229,8 @@ function displayComputer() {
     controls.classList.remove('d-none');
     mobileButtons.classList.add('d-none');
     fullscreenButton.classList.remove('d-none');
+    document.getElementById('impressDiv').classList.remove('top-0');
+    document.getElementById('impressDiv').classList.add('bottom-0');
 }
 
 
