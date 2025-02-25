@@ -74,12 +74,14 @@
                 <img src="img/6_botones/tittles/game_over/recurso_12.png" alt="Game over" class="gameOverImg p-3">
                 <img src="img/6_botones/try_again/recurso_16.png" alt="Restart" class="gameOverImg">
             </div>
-            <div id="victory" class="position-relative d-none">
-                <div id="gameWonBg" class="position-fixed top-50 start-50 translate-middle"> </div>
-                <img src="img/6_botones/tittles/you_win/mesa_de_trabajo_1.png" alt="Game won" class="gameWonImg position-absolute top-50 start-50 translate-middle">
-                <div id="restart" class="">
-                    <img src="img/6_botones/try_again/recurso_16.png" alt="Restart" class="gameRestartImg" onclick="restartGame();">
-                    <img src="img/back-to-menu.png" alt="Menu" class="gameRestartImg" onclick="showMenu();">
+            <div id="victory" class="d-none fixed-top">
+                <div id="gameWonBg"></div>
+                <div class="position-absolute top-50 start-50 translate-middle d-flex flex-column align-items-center gap-1">
+                    <img src="img/6_botones/tittles/you_win/mesa_de_trabajo_1.png" alt="Game won" class="gameWonImg">
+                    <div id="restart" class="d-flex justify-content-between">
+                        <img src="img/6_botones/try_again/recurso_16.png" alt="Restart" class="gameRestartImg" onclick="restartGame();">
+                        <img src="img/back-to-menu.png" alt="Menu" class="gameRestartImg" onclick="showMenu();">
+                    </div>
                 </div>
             </div>
         </div>

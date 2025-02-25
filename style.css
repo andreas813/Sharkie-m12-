@@ -96,13 +96,9 @@ h1.custom-font {
 
 
 #restart {
-    display: flex;
-    justify-content: center;
-    gap: 33%;
-    width: 33%;
-    max-height: 33vh;
     z-index: 3;
-    margin-top: 40%;
+    width: 100%;
+    max-width: 720px;
 }
 
 
@@ -112,7 +108,8 @@ h1.custom-font {
 
 
 .gameRestartImg {
-    width: 66%;
+    width: 33%;
+    max-width: 500px;
     cursor: pointer;
     opacity: 0.85;
     transition: opacity 0.3s;
@@ -145,32 +142,34 @@ h1.custom-font {
 
 
 .gameWonImg {
-    max-width: 90vw;
-    max-height: 70vh;
-    width: auto;
-    height: auto;
+    max-width: 720px;
+    max-height: 480px;
+    width: 100%;
     z-index: 2;
 }
 
 
 #gameWonBg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     background-color: #000;
-    height: 150vh;
-    width: 125vw;
+    z-index: -1;
 }
+
 
 
 #victory {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: auto;
-    height: auto;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     display: flex;
-    flex-direction: column;
-    align-items: center;
     z-index: 10;
+    overflow: hidden; 
 }
 
 
